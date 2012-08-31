@@ -2,7 +2,8 @@ require 'spec_helper'
 
 describe Ryte::Setting::YamlLoader do
 
-  let(:file) { File.open(File.join(Rails.root, "spec", "support", "valid_settings.yml")) }
+  valid_file = File.join(Rails.root, "spec", "support", "valid_settings.yml")
+  let(:file) { File.open(valid_file) }
   let(:loader) { Ryte::Setting::YamlLoader.new(file) }
 
 
@@ -15,11 +16,15 @@ describe Ryte::Setting::YamlLoader do
     it 'should have a ALLOWED_BUNDLE_KEYS_CONSTANT' do
       Ryte::Setting::YamlLoader::ALLOWED_BUNDLE_TYPES
     end
+
+    it 'should have a REQUIRED_SETTINGS_KEYS' do
+      Ryte::Setting::YamlLoader::REQUIRED_SETTINGS_KEYS
+    end
   end
 
   describe 'accessors' do
 
-    %w(file bundle_name bundle_type loaders).each do |attr|
+    %w(file finalized name type settings).each do |attr|
       describe "#{attr}" do
 
         before( :each ) do
@@ -31,42 +36,22 @@ describe Ryte::Setting::YamlLoader do
         end
       end
     end
+  end
 
-    describe "bundle_name" do
+  describe 'initialize' do
+
+    describe "name" do
 
       it "should set the bundle name to the top level key" do
-        loader.bundle_name == "beautiful_theme"
+        loader.name == "beautiful_theme"
       end
     end
-  end
 
-  describe "build" do
+    describe "finalized" do 
 
-    it "shoud call 'build_bundle' on each bundle of settings" do
-      %w(beautiful_theme wonderful_widget).each do |key|
-        loader.should_receive(:build_bundle).with(loader.settings[key])
+      it "should set 'finalized' to an empty array" do
+        loader.finalized == []
       end
-      loader.build
-    end
-  end
-
-  describe "build_bundle" do
-
-    before( :each ) do
-      @bundle_hash = loader.settings[:beautiful_theme]
-    end
-
-    it "should call 'validate_bundle_type' with the bundle type from loader" do
-      loader.should_receive.(:validate_bundle_type).with(@bundle_hash[:bundle_type])
-      loader.build_bundle(@bundle_hash)
-    end
-
-    it "should call 'build_setting' for each setting in a bundle group" do
-      %w(username name).each do |key|
-        loader.should_receive(:build_setting).
-          with("theme", "beautiful_theme", key, @bundle_hash[:settings][key])
-      end
-      loader.build_bundle(@bundle_hash)
     end
   end
 end
