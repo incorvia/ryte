@@ -49,4 +49,24 @@ describe Ryte::Setting::YamlLoader do
       loader.build
     end
   end
+
+  describe "build_bundle" do
+
+    before( :each ) do
+      @bundle_hash = loader.settings[:beautiful_theme]
+    end
+
+    it "should call 'validate_bundle_type' with the bundle type from loader" do
+      loader.should_receive.(:validate_bundle_type).with(@bundle_hash[:bundle_type])
+      loader.build_bundle(@bundle_hash)
+    end
+
+    it "should call 'build_setting' for each setting in a bundle group" do
+      %w(username name).each do |key|
+        loader.should_receive(:build_setting).
+          with("theme", "beautiful_theme", key, @bundle_hash[:settings][key])
+      end
+      loader.build_bundle(@bundle_hash)
+    end
+  end
 end
