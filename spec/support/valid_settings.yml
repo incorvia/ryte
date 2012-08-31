@@ -1,0 +1,15 @@
+beautiful_theme:
+  bundle_type: theme
+  settings:
+    username:
+      value:   incorvia
+      display: Twitter Name
+    name:
+      value:   Kevin Incorvia
+      display: User's Name
+wonderful_widget:
+  bundle_type: widget
+  settings:
+    color:
+      value:   red
+      display: Color

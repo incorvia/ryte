@@ -1,0 +1,1 @@
+Settings = Ryte::Setting::List
