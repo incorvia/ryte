@@ -147,8 +147,8 @@ describe Ryte::Setting::YamlLoader do
       loader.validate_bundle(@bundle)
     end
 
-    it "should call 'validate_setting_keys' on each set of bundle keys" do
-      loader.should_receive(:validate_setting_keys).with(@bundle)
+    it "should call 'validate_bundle_type' on the type" do
+      loader.should_receive(:validate_bundle_type).with(@bundle[:bundle_type])
       loader.validate_bundle(@bundle)
     end
   end
@@ -186,14 +186,80 @@ describe Ryte::Setting::YamlLoader do
   describe "validate_setting_keys" do
 
     before :each do
-      @keys = loader.settings[:beautiful_theme][:settings].keys
+      @settings = loader.settings[:beautiful_theme][:settings]
+      @valid = Ryte::Setting::YamlLoader::REQUIRED_SETTINGS_KEYS
     end
 
     it "should call 'validate_keys' on each key_value pair" do
-      loader.should_receive(:validate_keys).
-        with(@keys, Ryte::Setting::YamlLoader::REQUIRED_SETTINGS_KEYS)
-      loader.validate_setting_keys(@keys)
+      @settings.each do |key, key_values|
+        loader.should_receive(:validate_keys).with(key_values.keys, @valid)
+      end
+      loader.validate_setting_keys(@settings)
+    end
+  end
+
+  describe "validate_keys" do
+
+    before :each do
+      @valid = ['test1','test2']
     end
 
+    context 'valid keys' do
+
+      before :each do
+        @keys = ['test1', 'test2']
+      end
+
+      it "should return true" do
+        loader.validate_keys(@keys, @valid).should be_true
+      end
+    end
+
+    context 'invalid keys' do
+
+      before :each do
+        @keys = ['test10', 'test11', ['test1']]
+      end
+
+      it "should return true" do
+        @keys.each do |keys|
+          expect {
+            loader.validate_keys(keys, @valid)
+          }.to raise_error
+        end
+      end
+    end
   end
+
+  describe "validate_bundle_type" do
+
+    before :each do
+      @valid = Ryte::Setting::YamlLoader::ALLOWED_BUNDLE_TYPES
+    end
+
+    context 'valid type' do
+
+      before :each do
+        @type = 'theme'
+      end
+
+      it "should return true" do
+        loader.validate_bundle_type(@type).should be_true
+      end
+    end
+
+    context 'invalid keys' do
+
+      before :each do
+        @type = 'bad'
+      end
+
+      it "should return true" do
+        expect {
+          loader.validate_bundle_type(@type, @valid)
+        }.to raise_error
+      end
+    end
+  end
+
 end

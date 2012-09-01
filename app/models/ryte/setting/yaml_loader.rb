@@ -40,20 +40,22 @@ class Ryte::Setting::YamlLoader
 
   def validate_bundle(bundle)
     validate_all_keys(bundle)
-    validate_bundle_type(bundle)
+    validate_bundle_type(bundle[:bundle_type])
   end
 
   def validate_all_keys(bundle)
     validate_bundle_keys(bundle.keys)
-    validate_setting_keys(bundle[:settings].keys)
+    validate_setting_keys(bundle[:settings])
   end
 
   def validate_bundle_keys(keys)
     validate_keys(keys, ALLOWED_BUNDLE_KEYS)
   end
 
-  def validate_setting_keys(keys)
-    validate_keys(keys, REQUIRED_SETTINGS_KEYS)
+  def validate_setting_keys(settings)
+    settings.each do |key, key_values|
+      validate_keys(key_values.keys, REQUIRED_SETTINGS_KEYS)
+    end
   end
 
   def validate_keys(keys, valid_keys)
@@ -63,9 +65,7 @@ class Ryte::Setting::YamlLoader
     return true
   end
 
-  def validate_bundle_type(bundle)
-    type = bundle[:bundle_type]
-
+  def validate_bundle_type(type)
     unless ALLOWED_BUNDLE_TYPES.include?(type)
       raise "Bundle type is invalid: #{type}"
     end
