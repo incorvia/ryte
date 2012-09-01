@@ -9,7 +9,7 @@ describe Ryte::Setting do
 
     describe "setting_list" do
 
-      before( :each ) do
+      before :each do
         @list = list_with_settings
         @setting = @list.settings.first
       end
@@ -22,7 +22,7 @@ describe Ryte::Setting do
 
   describe "validations" do
 
-    before( :each ) do
+    before :each do
       @setting = setting
     end
 
@@ -34,7 +34,7 @@ describe Ryte::Setting do
 
           context "absent" do
 
-            before( :each ) do
+            before :each do
               @setting.send("#{attr}=", nil)
             end
 
@@ -45,7 +45,7 @@ describe Ryte::Setting do
 
           context "present" do
 
-            before( :each ) do
+            before :each do
               @setting.send("#{attr}=", 'theme')
             end
 
@@ -63,7 +63,7 @@ describe Ryte::Setting do
 
         context "setting" do
 
-          before( :each ) do
+          before :each do
             @list = list_with_settings
             @invalid = @list.settings.first
             @invalid.name= @list.settings.last.name
@@ -139,7 +139,7 @@ describe Ryte::Setting do
 
       context 'inclusion' do
 
-        before( :each ) do
+        before :each do
           Ryte::Setting::ALLOWED_TYPES.should include(@setting.type)
         end
 
@@ -150,7 +150,7 @@ describe Ryte::Setting do
 
       context 'exclusion' do
 
-        before( :each ) do
+        before :each do
           @setting.type = 'invalid'
         end
 
@@ -163,7 +163,7 @@ describe Ryte::Setting do
 
   describe "booleans" do
 
-    before( :each ) do
+    before :each do
       @setting = setting
     end
 
@@ -172,7 +172,7 @@ describe Ryte::Setting do
 
         context "is of type" do
 
-          before( :each ) do
+          before :each do
             @setting.type = type
           end
 
@@ -183,7 +183,7 @@ describe Ryte::Setting do
 
         context "is not of type" do
 
-          before( :each ) do
+          before :each do
             @setting.type = "invalid"
           end
 

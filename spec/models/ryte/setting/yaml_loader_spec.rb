@@ -6,7 +6,6 @@ describe Ryte::Setting::YamlLoader do
   let(:file) { File.open(valid_file) }
   let(:loader) { Ryte::Setting::YamlLoader.new(file) }
 
-
   describe 'constants' do
 
     it 'should have a ALLOWED_BUNDLE_KEYS_CONSTANT' do
@@ -27,7 +26,7 @@ describe Ryte::Setting::YamlLoader do
     %w(file finalized name type settings).each do |attr|
       describe "#{attr}" do
 
-        before( :each ) do
+        before :each do
           loader.instance_variable_set("@#{attr}".to_sym, 1)
         end
 
@@ -47,7 +46,7 @@ describe Ryte::Setting::YamlLoader do
       end
     end
 
-    describe "finalized" do 
+    describe "finalized" do
 
       it "should set 'finalized' to an empty array" do
         loader.finalized == []
@@ -66,7 +65,7 @@ describe Ryte::Setting::YamlLoader do
 
       context "settings are valid" do
 
-        before( :each ) do
+        before :each do
           loader.stub!(:valid?).and_return(true)
         end
 
@@ -78,7 +77,7 @@ describe Ryte::Setting::YamlLoader do
 
       context "settings are invalid" do
 
-        before( :each ) do
+        before :each do
           loader.stub!(:valid?).and_return(false)
         end
 
@@ -91,7 +90,7 @@ describe Ryte::Setting::YamlLoader do
 
     context "screen is false" do
 
-      before( :each ) do
+      before :each do
         loader.stub!(:screen).and_return(false)
       end
 
@@ -108,7 +107,93 @@ describe Ryte::Setting::YamlLoader do
       loader.settings.each do |key, bundle|
         loader.should_receive(:build_setting).with(bundle)
       end
-      loader.build_settings
+      loader.send(:build_settings)
     end
+  end
+
+  describe "build_setting" do
+
+    before :each do
+      @bundle = loader.settings[:beautiful_theme]
+      loader.send(:build_setting, @bundle)
+      @setting = loader.finalized.first
+    end
+
+    it "should add to finalized a properly built Ryte::Setting" do
+      @setting.should be_an_instance_of(Ryte::Setting)
+      @setting.value.should eql('incorvia')
+      @setting.display.should eql('Twitter Name')
+    end
+  end
+
+  describe "valid?" do
+
+    it "should call validate_bundle on each bundle" do
+      loader.settings.each do |key, bundle|
+        loader.should_receive(:validate_bundle).with(bundle)
+      end
+      loader.valid?
+    end
+  end
+
+  describe 'validate_bundle' do
+
+    before :each do
+      @bundle = loader.settings[:beautiful_theme]
+    end
+
+    it "should call 'validate_all_keys' on each set of bundle keys" do
+      loader.should_receive(:validate_all_keys).with(@bundle)
+      loader.validate_bundle(@bundle)
+    end
+
+    it "should call 'validate_setting_keys' on each set of bundle keys" do
+      loader.should_receive(:validate_setting_keys).with(@bundle)
+      loader.validate_bundle(@bundle)
+    end
+  end
+
+  describe 'validate_all_keys' do
+
+    before :each do
+      @bundle = loader.settings[:beautiful_theme]
+    end
+
+    it "should call 'validate_bundle_keys' on the set of bundle keys" do
+      loader.should_receive(:validate_bundle_keys).with(@bundle.keys)
+      loader.validate_all_keys(@bundle)
+    end
+
+    it "should call 'validate_setting_keys' on setting keys" do
+      loader.should_receive(:validate_setting_keys).with(@bundle[:settings])
+      loader.validate_all_keys(@bundle)
+    end
+  end
+
+  describe "validate_bundle_keys" do
+
+    before :each do
+      @keys = loader.settings[:beautiful_theme].keys
+    end
+
+    it "should call 'validate_keys' on the argument keys" do
+      loader.should_receive(:validate_keys).
+        with(@keys, Ryte::Setting::YamlLoader::ALLOWED_BUNDLE_KEYS)
+      loader.validate_bundle_keys(@keys)
+    end
+  end
+
+  describe "validate_setting_keys" do
+
+    before :each do
+      @keys = loader.settings[:beautiful_theme][:settings].keys
+    end
+
+    it "should call 'validate_keys' on each key_value pair" do
+      loader.should_receive(:validate_keys).
+        with(@keys, Ryte::Setting::YamlLoader::REQUIRED_SETTINGS_KEYS)
+      loader.validate_setting_keys(@keys)
+    end
+
   end
 end

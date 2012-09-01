@@ -1,13 +1,10 @@
 class Ryte::Setting::YamlLoader
+
   ALLOWED_BUNDLE_KEYS = %w(bundle_type settings)
   ALLOWED_BUNDLE_TYPES = %w(theme widget)
   REQUIRED_SETTINGS_KEYS = %w(value display)
 
-  attr_accessor :file
-  attr_accessor :finalized
-  attr_reader :name
-  attr_reader :type
-  attr_reader :settings
+  attr_reader :file, :finalized, :name, :type, :settings
 
   def initialize(file)
     @file = file
@@ -21,8 +18,6 @@ class Ryte::Setting::YamlLoader
       build_settings
     end
   end
-
-  private
 
   def build_settings
     settings.each do |key, bundle|
@@ -50,17 +45,15 @@ class Ryte::Setting::YamlLoader
 
   def validate_all_keys(bundle)
     validate_bundle_keys(bundle.keys)
-    validate_setting_keys(bundle[:settings])
+    validate_setting_keys(bundle[:settings].keys)
   end
 
   def validate_bundle_keys(keys)
     validate_keys(keys, ALLOWED_BUNDLE_KEYS)
   end
 
-  def validate_setting_keys(settings)
-    settings.each do |name, key_values|
-      validate_keys(key_values.keys, REQUIRED_SETTINGS_KEYS)
-    end
+  def validate_setting_keys(keys)
+    validate_keys(keys, REQUIRED_SETTINGS_KEYS)
   end
 
   def validate_keys(keys, valid_keys)

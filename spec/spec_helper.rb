@@ -38,7 +38,7 @@ RSpec.configure do |config|
   #     --seed 1234
   config.order = "random"
 
-  config.before( :each ) do
+  config.before :each do
     Mongoid.purge!
     Ryte::Setting::List.instance_variable_set(:@_list, nil)
   end

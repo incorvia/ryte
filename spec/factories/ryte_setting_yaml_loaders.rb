@@ -4,3 +4,5 @@ FactoryGirl.define do
   factory :ryte_setting_yaml_loader, :class => 'Ryte::Setting::YamlLoader' do
   end
 end
+
+

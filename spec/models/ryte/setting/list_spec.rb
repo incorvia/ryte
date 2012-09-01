@@ -11,7 +11,7 @@ describe Ryte::Setting::List do
 
       let(:list_with_settings) { create(:list_with_settings) }
 
-      before( :each ) do
+      before :each do
         @list = list_with_settings
       end
 
@@ -25,7 +25,7 @@ describe Ryte::Setting::List do
 
     describe "#allow_one_list" do
 
-      before( :each ) do
+      before :each do
         @valid = Ryte::Setting::List.create
       end
 
@@ -38,7 +38,7 @@ describe Ryte::Setting::List do
 
       context 'list' do
 
-        before( :each ) do
+        before :each do
           @invalid = Ryte::Setting::List.create
         end
 
@@ -57,7 +57,7 @@ describe Ryte::Setting::List do
 
     context '@_list set' do
 
-      before( :each ) do
+      before :each do
         Ryte::Setting::List.instance_variable_set(:@_list, list)
       end
 
@@ -80,7 +80,7 @@ describe Ryte::Setting::List do
 
     context '@_settings nil' do
 
-      before( :each ) do
+      before :each do
         Ryte::Setting::List.instance_variable_set(:@_list, nil)
       end
 
@@ -104,7 +104,7 @@ describe Ryte::Setting::List do
 
   describe '.by_name' do
 
-    before( :each ) do
+    before :each do
       @list = list_with_settings
       @setting = @list.settings.first
     end
@@ -116,7 +116,7 @@ describe Ryte::Setting::List do
 
   describe '.by_bundle' do
 
-    before( :each ) do
+    before :each do
       @list = list_with_settings
       @setting = @list.settings.first
       @invalid = @list.settings.last
@@ -134,7 +134,7 @@ describe Ryte::Setting::List do
 
   describe '.by_type' do
 
-    before( :each ) do
+    before :each do
       @list = list_with_settings
       @setting = @list.settings.first
       @invalid = @list.settings.last
