@@ -22,16 +22,18 @@ class Ryte::Setting::YamlLoader
     end
   end
 
-  def build_setting(bundle)
-    bundle[:settings].each do |name, key_values|
-      key_values.merge!(bundle: name, type: bundle[:bundle_type], name: name)
-      finalized << Ryte::Setting.new(key_values)
-    end
-  end
+  private
 
   def build_settings
     settings.each do |key, bundle|
       build_setting(bundle)
+    end
+  end
+
+  def build_setting(bundle)
+    bundle[:settings].each do |name, key_values|
+      key_values.merge!(bundle: name, type: bundle[:bundle_type], name: name)
+      finalized << Ryte::Setting.new(key_values)
     end
   end
 
@@ -41,18 +43,9 @@ class Ryte::Setting::YamlLoader
     end
   end
 
-  private
-
   def validate_bundle(bundle)
     validate_all_keys(bundle)
     validate_bundle_type(bundle)
-  end
-
-  def validate_keys(keys, valid_keys)
-    unless keys.sort == valid_keys.sort
-      raise "Keys are missing or invalid: #{keys}"
-    end
-    return true
   end
 
   def validate_all_keys(bundle)
@@ -68,6 +61,13 @@ class Ryte::Setting::YamlLoader
     settings.each do |name, key_values|
       validate_keys(key_values.keys, REQUIRED_SETTINGS_KEYS)
     end
+  end
+
+  def validate_keys(keys, valid_keys)
+    unless keys.sort == valid_keys.sort
+      raise "Keys are missing or invalid: #{keys}"
+    end
+    return true
   end
 
   def validate_bundle_type(bundle)

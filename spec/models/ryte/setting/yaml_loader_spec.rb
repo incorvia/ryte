@@ -22,7 +22,7 @@ describe Ryte::Setting::YamlLoader do
     end
   end
 
-  describe 'accessors' do
+  describe 'readers' do
 
     %w(file finalized name type settings).each do |attr|
       describe "#{attr}" do
@@ -52,6 +52,63 @@ describe Ryte::Setting::YamlLoader do
       it "should set 'finalized' to an empty array" do
         loader.finalized == []
       end
+    end
+  end
+
+  describe "build" do
+
+    context "screen is true" do
+
+      it "should call 'valid?'" do
+        loader.should_receive(:valid?)
+        loader.build(true)
+      end
+
+      context "settings are valid" do
+
+        before( :each ) do
+          loader.stub!(:valid?).and_return(true)
+        end
+
+        it "should call 'build_settings'" do
+          loader.should_receive(:build_settings)
+          loader.build(true)
+        end
+      end
+
+      context "settings are invalid" do
+
+        before( :each ) do
+          loader.stub!(:valid?).and_return(false)
+        end
+
+        it "should not call 'build_settings'" do
+          loader.should_not_receive(:build_settings)
+          loader.build(true)
+        end
+      end
+    end
+
+    context "screen is false" do
+
+      before( :each ) do
+        loader.stub!(:screen).and_return(false)
+      end
+
+      it "should not call 'build_settings'" do
+        loader.should_not_receive(:build_settings)
+        loader.build(false)
+      end
+    end
+  end
+
+  describe "build_settings" do
+
+    it "should call 'build_setting' on each bundle" do
+      loader.settings.each do |key, bundle|
+        loader.should_receive(:build_setting).with(bundle)
+      end
+      loader.build_settings
     end
   end
 end
