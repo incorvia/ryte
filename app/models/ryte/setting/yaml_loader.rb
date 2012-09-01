@@ -1,7 +1,6 @@
 class Ryte::Setting::YamlLoader
 
   ALLOWED_BUNDLE_KEYS = %w(bundle_type settings)
-  ALLOWED_BUNDLE_TYPES = %w(theme widget)
   REQUIRED_SETTINGS_KEYS = %w(value display)
 
   attr_reader :file, :finalized, :name, :type, :settings
@@ -17,6 +16,13 @@ class Ryte::Setting::YamlLoader
     if screen && valid?
       build_settings
     end
+    return self
+  end
+
+  def commit
+    Settings.all << finalized
+    Settings.list.save
+    Settings.list(true)
   end
 
   def build_settings
@@ -66,7 +72,7 @@ class Ryte::Setting::YamlLoader
   end
 
   def validate_bundle_type(type)
-    unless ALLOWED_BUNDLE_TYPES.include?(type)
+    unless Ryte::Setting::ALLOWED_TYPES.include?(type)
       raise "Bundle type is invalid: #{type}"
     end
     return true

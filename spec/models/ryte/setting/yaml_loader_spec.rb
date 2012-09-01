@@ -12,10 +12,6 @@ describe Ryte::Setting::YamlLoader do
       Ryte::Setting::YamlLoader::ALLOWED_BUNDLE_KEYS
     end
 
-    it 'should have a ALLOWED_BUNDLE_KEYS_CONSTANT' do
-      Ryte::Setting::YamlLoader::ALLOWED_BUNDLE_TYPES
-    end
-
     it 'should have a REQUIRED_SETTINGS_KEYS' do
       Ryte::Setting::YamlLoader::REQUIRED_SETTINGS_KEYS
     end
@@ -123,6 +119,20 @@ describe Ryte::Setting::YamlLoader do
       @setting.should be_an_instance_of(Ryte::Setting)
       @setting.value.should eql('incorvia')
       @setting.display.should eql('Twitter Name')
+    end
+  end
+
+  describe "commit!" do
+
+    before :each do
+      @loader = loader.build
+      Ryte::Setting::List.create
+    end
+
+    it "should persist settings to the databse" do
+      Settings.all.count.should eql(0)
+      @loader.commit
+      Settings.all.count.should eql(3)
     end
   end
 
@@ -234,7 +244,7 @@ describe Ryte::Setting::YamlLoader do
   describe "validate_bundle_type" do
 
     before :each do
-      @valid = Ryte::Setting::YamlLoader::ALLOWED_BUNDLE_TYPES
+      @valid = Ryte::Setting::ALLOWED_TYPES
     end
 
     context 'valid type' do

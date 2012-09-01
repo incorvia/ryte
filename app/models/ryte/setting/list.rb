@@ -15,6 +15,10 @@ class Ryte::Setting::List
       end
     end
 
+    def all
+      self.list.settings
+    end
+
     def by_name(name)
       self.list.settings.where(name: name).first
     end
@@ -31,7 +35,7 @@ class Ryte::Setting::List
   private
 
   def allow_one_list
-    if Ryte::Setting::List.count >= 1
+    if Ryte::Setting::List.count >= 1 && !self.persisted?
       errors.add(:one_allowed, "list document")
     end
   end

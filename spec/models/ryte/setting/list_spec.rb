@@ -102,6 +102,18 @@ describe Ryte::Setting::List do
     end
   end
 
+  describe '.all' do
+
+    before :each do
+      @list = list_with_settings
+      @settings = @list.settings
+    end
+
+    it "should return a setting by name" do
+      Ryte::Setting::List.all.should =~ @settings
+    end
+  end
+
   describe '.by_name' do
 
     before :each do

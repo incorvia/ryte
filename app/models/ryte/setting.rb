@@ -1,7 +1,7 @@
 class Ryte::Setting
   include Mongoid::Document
 
-  ALLOWED_TYPES = %w(system theme)
+  ALLOWED_TYPES = %w(system theme widget)
 
   embedded_in :setting_list, class_name: "Ryte::Setting::List"
 
