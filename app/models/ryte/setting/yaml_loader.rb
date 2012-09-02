@@ -7,9 +7,28 @@ class Ryte::Setting::YamlLoader
 
   def initialize(file)
     @file = file
-    @settings = YAML::load(file).with_indifferent_access
-    @name = @settings.keys.first
+    @settings = load_settings
+    @name = load_name
     @finalized = []
+  end
+
+  def load_settings
+    settings = YAML::load(file)
+    if settings
+      settings = settings.with_indifferent_access
+    end
+    return settings
+  end
+
+  def load_name
+    if settings
+      return settings.keys.first
+    end
+  end
+
+  def build_and_commit(screen=true)
+    build(screen)
+    commit
   end
 
   def build(screen=true)
@@ -17,11 +36,6 @@ class Ryte::Setting::YamlLoader
       build_settings
     end
     return self
-  end
-
-  def build_and_commit(screen=true)
-    build(screen)
-    commit
   end
 
   def commit
@@ -44,8 +58,10 @@ class Ryte::Setting::YamlLoader
   end
 
   def valid?
-    settings.each do |key, bundle|
-      validate_bundle(bundle)
+    if settings
+      settings.each do |key, bundle|
+        validate_bundle(bundle)
+      end
     end
   end
 

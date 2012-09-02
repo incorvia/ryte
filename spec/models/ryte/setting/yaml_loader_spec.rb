@@ -37,8 +37,14 @@ describe Ryte::Setting::YamlLoader do
 
     describe "name" do
 
-      it "should set the bundle name to the top level key" do
-        loader.name == "beautiful_theme"
+      it "should set the bundle via 'load_name'" do
+        loader.name == loader.load_name
+      end
+    end
+
+    describe "settings" do
+      it "should set the bundle via 'load_name'" do
+        loader.settings == loader.load_settings
       end
     end
 
@@ -47,6 +53,70 @@ describe Ryte::Setting::YamlLoader do
       it "should set 'finalized' to an empty array" do
         loader.finalized == []
       end
+    end
+  end
+
+  describe "load_settings" do
+
+    context "valid settings" do
+
+      before :each do
+        YAML.stub(:load).and_return({setting: true})
+      end
+
+      it "should return settings" do
+        loader.load_settings.keys.first.should eql("setting")
+      end
+    end
+
+    context "invalid_settings" do
+
+      before :each do
+        YAML.stub(:load).and_return(false)
+      end
+
+      it "should return settings" do
+        loader.load_settings.should be_false
+      end
+    end
+  end
+
+  describe "load_name" do
+
+    context "settings" do
+
+      it "should return the first key" do
+        loader.load_name.should eql("beautiful_theme")
+      end
+    end
+
+    context "settings are false" do
+
+      before :each do
+        @loader = loader
+        @loader.instance_variable_set(:@settings, false)
+      end
+
+      it "should return nil when no settings is false" do
+        @loader.load_name.should be_nil
+      end
+    end
+  end
+
+  describe "build_and_commit" do
+
+    before :each do
+      Ryte::Setting::List.create
+    end
+
+    it "should call 'build'" do
+      loader.should_receive(:build).with(false)
+      loader.build_and_commit(false)
+    end
+
+    it "should call 'commit'" do
+      loader.should_receive(:commit)
+      loader.build_and_commit
     end
   end
 
@@ -94,23 +164,6 @@ describe Ryte::Setting::YamlLoader do
         loader.should_not_receive(:build_settings)
         loader.build(false)
       end
-    end
-  end
-
-  describe "build_and_commit" do
-
-    before :each do
-      Ryte::Setting::List.create
-    end
-
-    it "should call 'build'" do
-      loader.should_receive(:build).with(false)
-      loader.build_and_commit(false)
-    end
-
-    it "should call 'commit'" do
-      loader.should_receive(:commit)
-      loader.build_and_commit
     end
   end
 
