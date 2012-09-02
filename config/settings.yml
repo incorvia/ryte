@@ -1,0 +1,6 @@
+system:
+  bundle_type: system
+  settings:
+    current_theme:
+      value:   default
+      display: Current Theme

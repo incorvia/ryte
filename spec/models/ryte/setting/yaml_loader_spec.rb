@@ -97,6 +97,23 @@ describe Ryte::Setting::YamlLoader do
     end
   end
 
+  describe "build_and_commit" do
+
+    before :each do
+      Ryte::Setting::List.create
+    end
+
+    it "should call 'build'" do
+      loader.should_receive(:build).with(false)
+      loader.build_and_commit(false)
+    end
+
+    it "should call 'commit'" do
+      loader.should_receive(:commit)
+      loader.build_and_commit
+    end
+  end
+
   describe "build_settings" do
 
     it "should call 'build_setting' on each bundle" do

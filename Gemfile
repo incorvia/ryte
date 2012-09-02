@@ -5,6 +5,7 @@ ruby "1.9.3"
 gem 'rails'
 gem 'mongoid'
 gem 'jquery-rails'
+gem 'configatron'
 
 group :assets do
   gem 'sass-rails'

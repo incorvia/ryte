@@ -19,6 +19,11 @@ class Ryte::Setting::YamlLoader
     return self
   end
 
+  def build_and_commit(screen=true)
+    build(screen)
+    commit
+  end
+
   def commit
     Settings.all << finalized
     Settings.list.save
