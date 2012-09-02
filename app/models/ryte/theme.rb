@@ -1,0 +1,2 @@
+class Ryte::Theme
+end
