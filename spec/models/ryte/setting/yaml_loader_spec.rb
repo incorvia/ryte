@@ -2,9 +2,12 @@ require 'spec_helper'
 
 describe Ryte::Setting::YamlLoader do
 
-  valid_file = File.join(Rails.root, "spec", "support", "valid_settings.yml")
-  let(:file) { File.open(valid_file) }
-  let(:loader) { Ryte::Setting::YamlLoader.new(file) }
+  before :each do
+    @file_path = File.join(Rails.root, "spec", "support", "valid_settings.yml")
+    @file = File.open(@file_path)
+    Ryte::Setting::List.create
+  end
+  let(:loader) { Ryte::Setting::YamlLoader.new(@file) }
 
   describe 'constants' do
 
@@ -17,17 +20,28 @@ describe Ryte::Setting::YamlLoader do
     end
   end
 
-  describe 'readers' do
+  describe 'accessors' do
 
-    %w(file finalized name type settings).each do |attr|
+    %w(file hash name settings).each do |attr|
       describe "#{attr}" do
 
-        before :each do
-          loader.instance_variable_set("@#{attr}".to_sym, 1)
+        describe "readers" do
+
+          before :each do
+            loader.instance_variable_set("@#{attr}".to_sym, 1)
+          end
+
+          it "should have a reader" do
+            loader.send(attr).should eql(1)
+          end
         end
 
-        it "should have an accessor" do
-          loader.send(attr).should eql(1)
+        describe "writers" do
+
+          it "should have a writer" do
+            loader.send("#{attr}=", 1)
+            loader.send(attr).should eql(1)
+          end
         end
       end
     end
@@ -35,28 +49,75 @@ describe Ryte::Setting::YamlLoader do
 
   describe 'initialize' do
 
+    describe "file" do
+
+      it "should set the file variable" do
+        loader.file.should eql(@file)
+      end
+    end
+
+    describe "hash" do
+      it "should set the hash via 'hash_from_file'" do
+        loader.hash == loader.send(:hash_from_file)
+      end
+    end
+
     describe "name" do
 
-      it "should set the bundle via 'load_name'" do
-        loader.name == loader.load_name
+      it "should set the name via 'name_from_hash'" do
+        loader.name == loader.send(:name_from_hash)
       end
     end
 
     describe "settings" do
-      it "should set the bundle via 'load_name'" do
-        loader.settings == loader.load_settings
-      end
-    end
-
-    describe "finalized" do
 
       it "should set 'finalized' to an empty array" do
-        loader.finalized == []
+        loader.settings == []
       end
     end
   end
 
-  describe "load_settings" do
+  describe "build!" do
+
+    it "should call 'build!'" do
+      loader.should_receive(:build)
+      loader.build!
+    end
+
+    it "should call 'commit'" do
+      loader.should_receive(:commit)
+      loader.build!
+    end
+  end
+
+  describe "build" do
+
+    it "should call 'build_settings' on each hash bundle" do
+      loader.hash.each do |key, bundle|
+        loader.should_receive(:build_settings).with(key, bundle)
+      end
+      loader.build
+    end
+
+    it "return self" do
+      loader.build.should be_an_instance_of(Ryte::Setting::YamlLoader)
+    end
+  end
+
+  describe "commit" do
+
+    before :each do
+      @loader = loader.build
+    end
+
+    it "should persist settings to the databse" do
+      Settings.all.count.should eql(0)
+      @loader.commit
+      Settings.all.count.should eql(3)
+    end
+  end
+
+  describe "hash_from_file" do
 
     context "valid settings" do
 
@@ -65,7 +126,7 @@ describe Ryte::Setting::YamlLoader do
       end
 
       it "should return settings" do
-        loader.load_settings.keys.first.should eql("setting")
+        loader.send(:hash_from_file).keys.first.should eql("setting")
       end
     end
 
@@ -76,17 +137,17 @@ describe Ryte::Setting::YamlLoader do
       end
 
       it "should return settings" do
-        loader.load_settings.should be_false
+        loader.send(:hash_from_file).should be_false
       end
     end
   end
 
-  describe "load_name" do
+  describe "name_from_hash" do
 
     context "settings" do
 
       it "should return the first key" do
-        loader.load_name.should eql("beautiful_theme")
+        loader.send(:name_from_hash).should eql("beautiful_theme")
       end
     end
 
@@ -94,252 +155,82 @@ describe Ryte::Setting::YamlLoader do
 
       before :each do
         @loader = loader
-        @loader.instance_variable_set(:@settings, false)
+        @loader.stub!(:hash).and_return(false)
       end
 
-      it "should return nil when no settings is false" do
-        @loader.load_name.should be_nil
-      end
-    end
-  end
-
-  describe "build_and_commit" do
-
-    before :each do
-      Ryte::Setting::List.create
-    end
-
-    it "should call 'build'" do
-      loader.should_receive(:build).with(false)
-      loader.build_and_commit(false)
-    end
-
-    it "should call 'commit'" do
-      loader.should_receive(:commit)
-      loader.build_and_commit
-    end
-  end
-
-  describe "build" do
-
-    context "screen is true" do
-
-      it "should call 'valid?'" do
-        loader.should_receive(:valid?)
-        loader.build(true)
-      end
-
-      context "settings are valid" do
-
-        before :each do
-          loader.stub!(:valid?).and_return(true)
-        end
-
-        it "should call 'build_settings'" do
-          loader.should_receive(:build_settings)
-          loader.build(true)
-        end
-      end
-
-      context "settings are invalid" do
-
-        before :each do
-          loader.stub!(:valid?).and_return(false)
-        end
-
-        it "should not call 'build_settings'" do
-          loader.should_not_receive(:build_settings)
-          loader.build(true)
-        end
-      end
-    end
-
-    context "screen is false" do
-
-      before :each do
-        loader.stub!(:screen).and_return(false)
-      end
-
-      it "should not call 'build_settings'" do
-        loader.should_not_receive(:build_settings)
-        loader.build(false)
+      it "should return nil when settings is false" do
+        @loader.send(:name_from_hash).should be_nil
       end
     end
   end
 
   describe "build_settings" do
 
-    it "should call 'build_setting' on each bundle" do
-      loader.settings.each do |key, bundle|
-        loader.should_receive(:build_setting).with(bundle)
-      end
-      loader.send(:build_settings)
-    end
-  end
-
-  describe "build_setting" do
-
     before :each do
-      @bundle = loader.settings[:beautiful_theme]
-      loader.send(:build_setting, @bundle)
-      @setting = loader.finalized.first
+      @loader = loader
+      @name = "beautiful_theme"
+      @bundle = loader.hash[@name]
     end
 
-    it "should add to finalized a properly built Ryte::Setting" do
-      @setting.should be_an_instance_of(Ryte::Setting)
-      @setting.value.should eql('incorvia')
-      @setting.display.should eql('Twitter Name')
-    end
-  end
+    context 'bundle provided' do
 
-  describe "commit!" do
+      context 'valid keys' do
 
-    before :each do
-      @loader = loader.build
-      Ryte::Setting::List.create
-    end
+        before :each do
+          @loader.send(:build_settings, @name, @bundle)
+          @first = @loader.settings.first
+        end
 
-    it "should persist settings to the databse" do
-      Settings.all.count.should eql(0)
-      @loader.commit
-      Settings.all.count.should eql(3)
-    end
-  end
-
-  describe "valid?" do
-
-    it "should call validate_bundle on each bundle" do
-      loader.settings.each do |key, bundle|
-        loader.should_receive(:validate_bundle).with(bundle)
-      end
-      loader.valid?
-    end
-  end
-
-  describe 'validate_bundle' do
-
-    before :each do
-      @bundle = loader.settings[:beautiful_theme]
-    end
-
-    it "should call 'validate_all_keys' on each set of bundle keys" do
-      loader.should_receive(:validate_all_keys).with(@bundle)
-      loader.validate_bundle(@bundle)
-    end
-
-    it "should call 'validate_bundle_type' on the type" do
-      loader.should_receive(:validate_bundle_type).with(@bundle[:bundle_type])
-      loader.validate_bundle(@bundle)
-    end
-  end
-
-  describe 'validate_all_keys' do
-
-    before :each do
-      @bundle = loader.settings[:beautiful_theme]
-    end
-
-    it "should call 'validate_bundle_keys' on the set of bundle keys" do
-      loader.should_receive(:validate_bundle_keys).with(@bundle.keys)
-      loader.validate_all_keys(@bundle)
-    end
-
-    it "should call 'validate_setting_keys' on setting keys" do
-      loader.should_receive(:validate_setting_keys).with(@bundle[:settings])
-      loader.validate_all_keys(@bundle)
-    end
-  end
-
-  describe "validate_bundle_keys" do
-
-    before :each do
-      @keys = loader.settings[:beautiful_theme].keys
-    end
-
-    it "should call 'validate_keys' on the argument keys" do
-      loader.should_receive(:validate_keys).
-        with(@keys, Ryte::Setting::YamlLoader::ALLOWED_BUNDLE_KEYS)
-      loader.validate_bundle_keys(@keys)
-    end
-  end
-
-  describe "validate_setting_keys" do
-
-    before :each do
-      @settings = loader.settings[:beautiful_theme][:settings]
-      @valid = Ryte::Setting::YamlLoader::REQUIRED_SETTINGS_KEYS
-    end
-
-    it "should call 'validate_keys' on each key_value pair" do
-      @settings.each do |key, key_values|
-        loader.should_receive(:validate_keys).with(key_values.keys, @valid)
-      end
-      loader.validate_setting_keys(@settings)
-    end
-  end
-
-  describe "validate_keys" do
-
-    before :each do
-      @valid = ['test1','test2']
-    end
-
-    context 'valid keys' do
-
-      before :each do
-        @keys = ['test1', 'test2']
+        it "should build settings appropriately" do
+          @first.name.should eql("username")
+          @first.type.should eql(@bundle[:bundle_type])
+          @first.value.should eql("incorvia")
+        end
       end
 
-      it "should return true" do
-        loader.validate_keys(@keys, @valid).should be_true
+      context 'bundle[:settings] is nil' do
+
+        before :each do
+          @bundle[:settings] = nil
+          @loader.send(:build_settings, @name, @bundle)
+        end
+
+        it "should build no settings" do
+          @loader.settings.count.should eql(0)
+        end
       end
-    end
 
-    context 'invalid keys' do
+      context 'bundle.keys are invalid' do
 
-      before :each do
-        @keys = ['test10', 'test11', ['test1']]
-      end
+        before :each do
+          @bundle = {}
+          @msg = ["Bundle beautiful_theme contains invalid keys"]
+        end
 
-      it "should return true" do
-        @keys.each do |keys|
-          expect {
-            loader.validate_keys(keys, @valid)
-          }.to raise_error
+        it "should add an error" do
+          @loader.send(:build_settings, @name, @bundle)
+          @loader.errors.messages[:hash].should eql(@msg)
+        end
+
+        it "should add an error" do
+          @loader.send(:build_settings, @name, @bundle).should be_false
         end
       end
     end
   end
 
-  describe "validate_bundle_type" do
+  describe "validate_settings" do
 
     before :each do
-      @valid = Ryte::Setting::ALLOWED_TYPES
+      @loader = loader
+      @loader.build
     end
 
-    context 'valid type' do
-
-      before :each do
-        @type = 'theme'
+    it "should call'valid?' on each setting" do
+      @loader.settings.each do |setting|
+        setting.should_receive(:valid?)
       end
-
-      it "should return true" do
-        loader.validate_bundle_type(@type).should be_true
-      end
-    end
-
-    context 'invalid keys' do
-
-      before :each do
-        @type = 'bad'
-      end
-
-      it "should return true" do
-        expect {
-          loader.validate_bundle_type(@type, @valid)
-        }.to raise_error
-      end
+      @loader.send(:validate_settings)
     end
   end
-
 end

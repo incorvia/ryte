@@ -9,6 +9,8 @@ Ryte::Config = configatron
 #     File.join(Rails.root, "config", "settings.yml"
 #   end
 
+############### Setup ##################
+
 # Path to settings.yml for Ryte::Setup
 Ryte::Config.settings_path = Configatron::Delayed.new do
  File.join(Rails.root, "config", "settings.yml")
