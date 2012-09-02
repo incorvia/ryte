@@ -1,3 +1,6 @@
-class Ryte::Theme::Registration
-  include Mongoid::Document
+module Ryte::Theme::Registration
+  extend ActiveSupport::Concern
+
+  module ClassMethods
+  end
 end
