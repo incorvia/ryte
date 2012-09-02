@@ -221,16 +221,27 @@ describe Ryte::Setting::YamlLoader do
 
   describe "validate_settings" do
 
-    before :each do
-      @loader = loader
-      @loader.build
-    end
-
     it "should call'valid?' on each setting" do
-      @loader.settings.each do |setting|
+      loader.build
+      loader.settings.each do |setting|
         setting.should_receive(:valid?)
       end
-      @loader.send(:validate_settings)
+      loader.send(:validate_settings)
+    end
+
+    describe 'errors' do
+
+      before :each do
+        @loader = loader
+        @loader.build
+        @loader.settings.first.name = nil
+        @msg = [{:name=>["can't be blank", "is invalid"]}]
+      end
+
+      it 'should add errors when present' do
+        @loader.send(:validate_settings)
+        @loader.errors.messages[:settings].should eql(@msg)
+      end
     end
   end
 end

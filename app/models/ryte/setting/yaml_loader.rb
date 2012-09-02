@@ -62,7 +62,7 @@ class Ryte::Setting::YamlLoader
       setting.valid?
 
       if setting.errors.count > 0
-        setting.errors.each do |key, error|
+        setting.errors.messages.each do |key, error|
           errors.add(:settings, {key => error})
         end
       end
