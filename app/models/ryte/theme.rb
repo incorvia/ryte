@@ -12,16 +12,20 @@ class Ryte::Theme
   validate :name_with_regex
   validate :files_with_required
 
+  private
+
   def name_with_regex
     unless name =~ Ryte::Setting::NAME_REGEX
       errors.add(:name, "Name is invalid")
     end
+    errors.count > 0 ? false : true
   end
 
   def files_with_required
     unless (Dir.glob(matcher(name)) - REQUIRED).empty?
-      errors.add(:name, "Name is invalid")
+      errors.add(:name, "File list is incomplete")
     end
+    errors.count > 0 ? false : true
   end
 
   def theme_dir_path(name)
