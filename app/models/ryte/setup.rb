@@ -28,7 +28,7 @@ module Ryte::Setup
         value: "default",
         display: "Default",
         bundle: "system",
-        type: "theme")
+        type: "system")
     end
   end
 end

@@ -5,6 +5,10 @@ describe Ryte::Setting::List do
   let(:list) { create(:ryte_setting_list) }
   let(:list_with_settings) { create(:list_with_settings) }
 
+  before :each do
+    Ryte::Setting::List.create
+  end
+
   describe "associations" do
 
     describe "settings" do
@@ -159,6 +163,26 @@ describe Ryte::Setting::List do
 
     it "should not return a setting not in the type" do
       Ryte::Setting::List.by_type(@setting.type).should_not include(@invalid)
+    end
+  end
+
+  describe ".current_theme" do
+
+    before :each do
+      setup_current_theme
+    end
+
+    it "should call 'by_name' on settings" do
+      Settings.current_theme.should eql('default')
+    end
+  end
+
+  describe ".load" do
+
+    it "should save a list of settings" do
+      expect {
+        Settings.load([build(:setting)])
+      }.to change(Settings.all, :count).by(1)
     end
   end
 end

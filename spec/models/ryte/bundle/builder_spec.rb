@@ -30,7 +30,7 @@ describe Ryte::Bundle::Builder do
       theme.build
     end
 
-    it "return self" do
+    it "returns self" do
       theme.build.should be_an_instance_of(Ryte::Theme)
     end
   end
