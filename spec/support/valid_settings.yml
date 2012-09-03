@@ -2,7 +2,7 @@ beautiful_theme:
   bundle_type: theme
   settings:
     username:
-      dalue:   incorvia
+      value:   incorvia
       display: Twitter Name
     name:
       value:   Kevin Incorvia

@@ -15,3 +15,8 @@ Ryte::Config = configatron
 Ryte::Config.settings_path = Configatron::Delayed.new do
  File.join(Rails.root, "config", "settings.yml")
 end
+
+# Path to the user directory
+Ryte::Config.users_path = Configatron::Delayed.new do
+ File.join(Rails.root, "user")
+end

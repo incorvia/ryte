@@ -30,6 +30,16 @@ class Ryte::Setting::List
     def by_type(type)
       self.list.settings.where(type: type).to_a
     end
+
+    def current_theme
+      Settings.by_name("current_theme").value
+    end
+
+    def load(settings)
+      self.all << settings
+      self.list.save
+      self.list(true)
+    end
   end
 
   private

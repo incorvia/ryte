@@ -3,19 +3,26 @@ module Ryte::Theme::Registration
 
   module ClassMethods
 
-    def register!(current=false)
-      if valid?
-        load_settings(name)
-        set_current_name if current
+    def register!(name, current=false)
+      theme = Ryte::Theme.new(name)
+
+      if theme.valid?
+        theme.build!
+
+        if current
+          set_current_theme(theme.name)
+        end
       end
     end
 
-    def load_settings
-      loader = Ryte::Setting::YamlLoader.new(settings_path(name))
-    end
+    def set_current_theme(name)
+      current_theme = Settings.by_name("current_theme")
 
-    def set_current_theme
-      # Set current theme name
+      if current_theme
+        current_theme.value = name
+        current_theme.save
+      end
+      Settings.list(true)
     end
   end
 end

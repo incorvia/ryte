@@ -1,0 +1,6 @@
+default:
+  bundle_type: "theme"
+  settings:
+    theme_name:
+      value: "default"
+      display: "Default"
