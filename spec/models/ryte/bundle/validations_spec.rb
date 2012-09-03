@@ -109,4 +109,45 @@ describe Ryte::Bundle::Validations do
       end
     end
   end
+
+  describe "missing_files" do
+
+    before :each do
+      stub_const("Ryte::Theme::REQUIRED", ['foo.yml'])
+      Ryte::Theme.stub!(:files).and_return([])
+    end
+
+    it 'should return missing files' do
+      theme.send(:missing_files).first.should match(/foo\.yml/)
+    end
+  end
+
+  describe "return_errors" do
+
+    before :each do
+      @theme = theme
+    end
+
+    context 'errors' do
+
+      before :each do
+        @theme.stub_chain(:errors, :messages).and_return({foo: ['error']})
+      end
+
+      it 'should return false' do
+        @theme.send(:return_errors, :foo).should be_false
+      end
+    end
+
+    context 'no errors' do
+
+      before :each do
+        @theme.stub_chain(:errors, :messages).and_return({})
+      end
+
+      it 'should return true' do
+        @theme.send(:return_errors, :foo).should be_true
+      end
+    end
+  end
 end
