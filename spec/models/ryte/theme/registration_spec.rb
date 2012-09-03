@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Ryte::Theme::Registration do
-  
+
   let(:theme) { Ryte::Theme.new('default') }
 
   describe ".register!" do
@@ -25,8 +25,8 @@ describe Ryte::Theme::Registration do
 
       context 'current is true' do
 
-        it "should call 'set_current_theme!'" do
-          Ryte::Theme.should_receive(:set_current_theme)
+        it "should call 'current_theme=' on Settings" do
+          Settings.should_receive(:current_theme=).with('default')
           Ryte::Theme.register!('default', true)
         end
       end
