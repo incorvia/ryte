@@ -166,6 +166,37 @@ describe Ryte::Setting::List do
     end
   end
 
+  describe ".save_and_reload" do
+
+    before :each do
+      @list = Settings.list
+      setup_current_theme
+    end
+
+    it "should call save on the settings list" do
+      @list.should_receive(:save)
+      Settings.save_and_reload
+    end
+
+    it "should receive 'list' with refresh true" do
+      Settings.current_theme.should eql('default')
+      setting = Settings.by_name('current_theme')
+      setting.value = 'test'
+      Settings.send(:save_and_reload)
+      setting.reload
+      setting.value.should eql('test')
+    end
+  end
+
+  describe ".load" do
+
+    it "should save a list of settings" do
+      expect {
+        Settings.load([build(:setting)])
+      }.to change(Settings.all, :count).by(1)
+    end
+  end
+
   describe ".current_theme" do
 
     before :each do
@@ -177,12 +208,16 @@ describe Ryte::Setting::List do
     end
   end
 
-  describe ".load" do
+  describe "current_theme=" do
 
-    it "should save a list of settings" do
-      expect {
-        Settings.load([build(:setting)])
-      }.to change(Settings.all, :count).by(1)
+    before :each do
+      setup_current_theme
+      Settings.current_theme.should eql('default')
+    end
+
+    it "should set the name of the current_theme" do
+      Settings.current_theme = 'test'
+      Settings.current_theme.should eql('test')
     end
   end
 end

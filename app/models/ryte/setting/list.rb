@@ -31,14 +31,24 @@ class Ryte::Setting::List
       self.list.settings.where(type: type).to_a
     end
 
-    def current_theme
-      Settings.by_name("current_theme").value
+    def save_and_reload
+      Settings.list.save
+      Settings.list(true)
     end
 
     def load(settings)
       self.all << settings
       self.list.save
       self.list(true)
+    end
+
+    def current_theme
+      Settings.by_name("current_theme").value
+    end
+
+    def current_theme=(value)
+      Settings.by_name("current_theme").value = value
+      Settings.save_and_reload
     end
   end
 
