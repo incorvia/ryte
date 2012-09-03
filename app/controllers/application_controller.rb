@@ -8,6 +8,6 @@ class ApplicationController < ActionController::Base
   end
 
   def theme_path
-    File.join(Ryte::Config.users_path,'themes',Settings.current_theme,'partials')
+    File.join(Ryte::Config.users_path,'themes',Settings.current_theme,'views')
   end
 end

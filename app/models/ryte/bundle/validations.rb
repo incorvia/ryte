@@ -5,7 +5,7 @@ module Ryte::Bundle::Validations
     BUNDLE_KEYS = %w(bundle_type settings)
     REQUIRED = %w(
       settings.yml
-      partials/index.html.erb
+      views/index.html.erb
     )
 
     validate :validate_name
