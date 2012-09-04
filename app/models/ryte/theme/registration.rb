@@ -7,9 +7,7 @@ module Ryte::Theme::Registration
       theme = Ryte::Theme.new(name)
 
       if theme.valid?
-        remove_asset_paths
         theme.build!
-        set_asset_paths
         precompile
 
         if current
