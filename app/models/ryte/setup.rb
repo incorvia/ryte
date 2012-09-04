@@ -6,7 +6,8 @@ module Ryte::Setup
       Mongoid.purge!
       create_initial_list
       create_initial_settings
-      register_default_theme
+      default_theme_register
+      default_theme_activate
     end
 
     def create_initial_list
@@ -19,8 +20,12 @@ module Ryte::Setup
       Settings.load(settings)
     end
 
-    def register_default_theme
-      Ryte::Theme.register!('default', true)
+    def default_theme_register
+      Ryte::Theme.register!('default')
+    end
+
+    def default_theme_activate
+      Ryte::Theme.activate!('default')
     end
 
     def create_current_theme

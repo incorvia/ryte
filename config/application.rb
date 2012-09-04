@@ -22,7 +22,7 @@ module Ryte
     # -- all .rb files in that directory are automatically loaded.
 
     # Custom directories with classes and modules you want to be autoloadable.
-    # config.autoload_paths += %W(#{config.root}/extras)
+    config.autoload_paths += %W(#{config.root}/lib)
 
     # Only load the plugins named here, in the order given (default is alphabetical).
     # :all can be used as a placeholder for all plugins not explicitly named.
@@ -70,11 +70,5 @@ module Ryte
     config.generators.stylesheets = false
     config.generators.javascripts = false
     config.generators.views = false
-
-    # Mongoid Logging
-    Mongoid.logger.level = Logger::DEBUG
-    Moped.logger.level = Logger::DEBUG
-    Mongoid.logger = Logger.new($stdout)
-    Moped.logger = Logger.new($stdout)
   end
 end
