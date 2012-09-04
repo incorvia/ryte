@@ -2,7 +2,6 @@ require 'spec_helper'
 
 describe Ryte::Setup do
 
-  let(:settings_yml) { File.open(Ryte::Config.settings_path) }
   let(:theme) { Ryte::Theme.new('default') }
 
   describe ".setup!" do

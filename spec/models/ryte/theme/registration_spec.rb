@@ -8,6 +8,7 @@ describe Ryte::Theme::Registration do
 
     before :each do
       Ryte::Setting::List.create
+      setup_current_theme
       @theme = theme
       Ryte::Theme.stub!(:new).and_return(@theme)
     end
@@ -27,6 +28,11 @@ describe Ryte::Theme::Registration do
 
         it "should call 'current_theme=' on Settings" do
           Settings.should_receive(:current_theme=).with('default')
+          Ryte::Theme.register!('default', true)
+        end
+
+        it "should call 'set_asset_paths" do
+          Ryte::Theme.should_receive(:set_assets_paths)
           Ryte::Theme.register!('default', true)
         end
       end

@@ -9,7 +9,7 @@ module Ryte::Bundle::Core
   def initialize(name)
     @name          = name
     @files         = Dir.glob(file_matcher(name))
-    @settings_file = File.open(settings_path(name))
+    @settings_file = File.open(Settings.settings_path(self.to_type))
     @settings      = []
 
     if validate_files
@@ -17,12 +17,25 @@ module Ryte::Bundle::Core
     end
   end
 
-  def settings_path(name)
-    File.join(Ryte::Config.users_path, self.to_type, name, 'settings.yml')
+  module ClassMethods
+
+    def set_asset_paths
+      Settings.assets_dirs.each do |dir|
+        new = File.join(Settings.current_theme_path, dir)
+        Ryte::Application.config.assets.paths << new
+      end
+    end
+
+    def remove_asset_paths
+      Settings.assets_dirs.each do |dir|
+        old = File.join(Settings.current_theme_path, dir)
+        Ryte::Application.config.assets.paths.delete(old)
+      end
+    end
   end
 
   def file_matcher(name)
-    File.join(Ryte::Config.users_path, self.to_type, name, "**/*.*")
+    File.join(Settings.users_path, self.to_type, name, "**/*.*")
   end
 
   def to_type

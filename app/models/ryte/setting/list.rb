@@ -50,6 +50,26 @@ class Ryte::Setting::List
       Settings.by_name("current_theme").value = value
       Settings.save_and_reload
     end
+
+    def current_theme_path
+      File.join(Settings.users_path,'themes',Settings.current_theme)
+    end
+
+    def current_views_path
+      File.join(current_theme_path, "views")
+    end
+
+    def users_path
+      File.join(Rails.root, "user")
+    end
+
+    def assets_dirs
+      %w(images stylesheets javascripts).map { |x| File.join(current_theme_path, x) }
+    end
+
+    def settings_path(type)
+      File.join(Settings.users_path, type, current_theme, 'settings.yml')
+    end
   end
 
   private

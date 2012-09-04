@@ -5,7 +5,7 @@ module Ryte::Bundle::Validations
     BUNDLE_KEYS = %w(bundle_type settings)
     REQUIRED = %w(
       settings.yml
-      views/index.html.erb
+      views/posts/index.html.erb
     )
 
     validate :validate_name
@@ -31,6 +31,7 @@ module Ryte::Bundle::Validations
   end
 
   def validate_keys
+    binding.pry
     settings_hash.each do |key, bundle|
       unless bundle.try(:keys) == BUNDLE_KEYS
         errors.add(:settings_hash, "Bundle #{name} contains invalid keys")
@@ -52,7 +53,7 @@ module Ryte::Bundle::Validations
 
   def missing_files
     required = self.class::REQUIRED.map do |x|
-      File.join(Ryte::Config.users_path, self.to_type, name, x)
+      File.join(Settings.users_path, self.to_type, name, x)
     end
     return (required - files)
   end

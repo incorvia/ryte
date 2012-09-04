@@ -2,12 +2,13 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 
   before_filter :set_view_paths
+  before_filter :set_asset_paths
 
   def set_view_paths
-    prepend_view_path(theme_path)
+    prepend_view_path(Settings.current_views_path)
   end
 
-  def theme_path
-    File.join(Ryte::Config.users_path,'themes',Settings.current_theme,'views')
+  def set_asset_paths
+    Ryte::Theme.set_asset_paths
   end
 end
