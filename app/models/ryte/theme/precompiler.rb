@@ -6,6 +6,10 @@ module Ryte::Theme::Precompiler
       @_env ||= Rails.application.assets
     end
 
+    def _paths
+      @_paths ||= Rails.application.config.assets.paths
+    end
+
     def run!
       self.clean_paths
       self.append_paths
@@ -13,15 +17,12 @@ module Ryte::Theme::Precompiler
     end
 
     def clean_paths
-      matcher = Settings.current_theme
-      prev    = _env.paths
-      keep    = prev.delete_if { |dir| dir =~ Regexp.new(matcher) }
-
       _env.clear_paths
-      keep.each { |dir| _env.append_path(dir) }
     end
 
     def append_paths
+      _paths.each { |path| _env.append_path(path) }
+
       Settings.assets_dirs.each do |dir|
         _env.append_path(dir)
       end

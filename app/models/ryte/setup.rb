@@ -17,6 +17,7 @@ module Ryte::Setup
     def create_initial_settings
       settings = []
       settings << create_current_theme
+      settings << system_setup_complete
       Settings.load(settings)
     end
 
@@ -32,6 +33,14 @@ module Ryte::Setup
       Ryte::Setting.new(name: "current_theme",
         value: "default",
         display: "Default",
+        bundle: "system",
+        type: "system")
+    end
+
+    def system_setup_complete
+      Ryte::Setting.new(name: "system_setup",
+        value: true,
+        display: "System Setup",
         bundle: "system",
         type: "system")
     end

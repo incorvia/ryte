@@ -11,7 +11,7 @@ class Ryte::Setting::List
       if refresh
         self.first
       else
-        @_list ||= self.first
+        @_list ||= self.first || self.create
       end
     end
 
