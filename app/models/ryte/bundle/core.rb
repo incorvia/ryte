@@ -17,23 +17,6 @@ module Ryte::Bundle::Core
     end
   end
 
-  module ClassMethods
-
-    def set_asset_paths
-      Settings.assets_dirs.each do |dir|
-        new = File.join(Settings.current_theme_path, dir)
-        Ryte::Application.config.assets.paths << new
-      end
-    end
-
-    def remove_asset_paths
-      Settings.assets_dirs.each do |dir|
-        old = File.join(Settings.current_theme_path, dir)
-        Ryte::Application.config.assets.paths.delete(old)
-      end
-    end
-  end
-
   def file_matcher(name)
     File.join(Settings.users_path, self.to_type, name, "**/*.*")
   end

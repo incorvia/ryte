@@ -16,6 +16,7 @@ module Ryte::Theme::Registration
       end
     end
 
+    # Taken from Sprockets
     def precompile(digest=nil)
       unless Rails.application.config.assets.enabled
         warn "Cannot precompile assets if sprockets is disabled. Please set config.assets.enabled to true"

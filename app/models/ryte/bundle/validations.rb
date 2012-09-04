@@ -31,7 +31,6 @@ module Ryte::Bundle::Validations
   end
 
   def validate_keys
-    binding.pry
     settings_hash.each do |key, bundle|
       unless bundle.try(:keys) == BUNDLE_KEYS
         errors.add(:settings_hash, "Bundle #{name} contains invalid keys")
