@@ -45,7 +45,6 @@ module Ryte::Theme::Registration
                                                :manifest_path => config.assets.manifest,
                                                :digest => config.assets.digest,
                                                :manifest => digest.nil?)
-      binding.pry
       compiler.compile
     end
 
