@@ -10,7 +10,7 @@ module Ryte::Theme::Registration
         remove_asset_paths
         theme.build!
         set_asset_paths
-        `rake assets:precompile`
+        precompile
 
         if current
           Settings.current_theme = theme.name
