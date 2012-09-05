@@ -6,6 +6,4 @@
 ############### Setup ##################
 
 # Path to the user directory
-Ryte::Config.users_path = Configatron::Delayed.new do
- File.join(Rails.root, "spec", "support", "user")
-end
+Ryte::Config.user_path = File.join(Rails.root, "spec", "support", "user")

@@ -23,19 +23,6 @@ describe Ryte::Theme::Registration do
         @theme.should_receive(:build!)
         Ryte::Theme.register!('default')
       end
-
-      context 'current is true' do
-
-        it "should call 'current_theme=' on Settings" do
-          Settings.should_receive(:current_theme=).with('default')
-          Ryte::Theme.register!('default', true)
-        end
-
-        it "should call 'set_asset_paths" do
-          Ryte::Theme.should_receive(:set_assets_paths)
-          Ryte::Theme.register!('default', true)
-        end
-      end
     end
 
     context "settings are invalid" do

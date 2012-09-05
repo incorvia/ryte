@@ -40,6 +40,6 @@ RSpec.configure do |config|
 
   config.before :each do
     Mongoid.purge!
-    Ryte::Setting::List.instance_variable_set(:@_list, nil)
+    Ryte::Setup.setup!
   end
 end

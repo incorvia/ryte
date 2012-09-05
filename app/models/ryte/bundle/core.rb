@@ -9,7 +9,7 @@ module Ryte::Bundle::Core
   def initialize(name)
     @name          = name
     @files         = Dir.glob(file_matcher(name))
-    @settings_file = File.open(Settings.settings_path(self.to_type))
+    @settings_file = File.open(Settings.theme_settings_path(self.to_type))
     @settings      = []
 
     if validate_files

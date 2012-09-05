@@ -6,6 +6,7 @@ module Ryte::Bundle::Validations
     REQUIRED = %w(
       settings.yml
       views/posts/index.html.erb
+      stylesheets/styles.css
     )
 
     validate :validate_name
@@ -31,7 +32,7 @@ module Ryte::Bundle::Validations
   end
 
   def validate_keys
-    settings_hash.each do |key, bundle|
+    (settings_hash || {}).each do |key, bundle|
       unless bundle.try(:keys) == BUNDLE_KEYS
         errors.add(:settings_hash, "Bundle #{name} contains invalid keys")
       end

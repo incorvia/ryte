@@ -7,7 +7,6 @@ describe Ryte::Bundle::Core do
   before :each do
     @file_path = File.join(Rails.root, "spec", "support", "valid_settings.yml")
     @file = File.open(@file_path)
-    Ryte::Setting::List.create
   end
 
   describe 'accessors' do

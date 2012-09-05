@@ -43,6 +43,7 @@ describe Ryte::Bundle::Builder do
 
     it "should persist settings to the databse" do
       expect {
+        binding.pry
         @theme.commit
       }.to change(Settings.all, :count).by(1)
     end
@@ -75,9 +76,9 @@ describe Ryte::Bundle::Builder do
       end
 
       it "should build settings appropriately" do
-        @first.name.should eql("theme_name")
+        @first.name.should eql("widget_width")
         @first.type.should eql(@bundle[:bundle_type])
-        @first.value.should eql("default")
+        @first.value.should eql("50")
       end
     end
 

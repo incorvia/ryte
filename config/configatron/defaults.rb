@@ -8,3 +8,5 @@ Ryte::Config = configatron
 #   Ryte::Config.settings_path = Configatron::Delayed.new do
 #     File.join(Rails.root, "config", "settings.yml"
 #   end
+
+Ryte::Config.user_path = File.join(Rails.root, "user")

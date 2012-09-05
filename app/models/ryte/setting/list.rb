@@ -9,7 +9,7 @@ class Ryte::Setting::List
 
     def list(refresh=false)
       if refresh
-        self.first
+        @_list = self.first
       else
         @_list ||= self.first || self.create
       end
@@ -41,6 +41,17 @@ class Ryte::Setting::List
       self.list.save
       self.list(true)
     end
+    def theme_settings_path(type)
+      File.join(Settings.users_path, type, current_theme, 'settings.yml')
+    end
+
+    def users_path
+      Ryte::Config.user_path
+    end
+
+    def assets_dirs
+      %w(images stylesheets javascripts).map { |x| File.join(current_theme_path, x) }
+    end
 
     def current_theme
       Settings.by_name("current_theme").value
@@ -57,18 +68,6 @@ class Ryte::Setting::List
 
     def current_views_path
       File.join(current_theme_path, "views")
-    end
-
-    def users_path
-      File.join(Rails.root, "user")
-    end
-
-    def assets_dirs
-      %w(images stylesheets javascripts).map { |x| File.join(current_theme_path, x) }
-    end
-
-    def settings_path(type)
-      File.join(Settings.users_path, type, current_theme, 'settings.yml')
     end
   end
 

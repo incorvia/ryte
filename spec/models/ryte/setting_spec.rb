@@ -3,7 +3,10 @@ require 'spec_helper'
 describe Ryte::Setting do
 
   let(:setting) { build(:ryte_setting) }
-  let(:list_with_settings) { create(:list_with_settings) }
+  let(:list_with_settings) do
+    settings = Array.new(2){ build(:ryte_setting) }
+    Settings.load(settings)
+  end
 
   describe "associations" do
 

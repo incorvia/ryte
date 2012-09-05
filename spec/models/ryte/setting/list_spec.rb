@@ -2,12 +2,8 @@ require 'spec_helper'
 
 describe Ryte::Setting::List do
 
-  let(:list) { create(:ryte_setting_list) }
-  let(:list_with_settings) { create(:list_with_settings) }
-
-  before :each do
-    Ryte::Setting::List.create
-  end
+  let(:list) { Settings.list }
+  let(:list_with_settings) { build(:list_with_settings) }
 
   describe "associations" do
 
@@ -192,7 +188,7 @@ describe Ryte::Setting::List do
 
     it "should save a list of settings" do
       expect {
-        Settings.load([build(:setting)])
+        Settings.load([build(:ryte_setting)])
       }.to change(Settings.all, :count).by(1)
     end
   end

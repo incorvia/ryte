@@ -3,11 +3,48 @@ module Ryte::Setup
   class << self
 
     def setup!
-      Mongoid.purge!
-      create_initial_list
-      create_initial_settings
-      default_theme_register
-      default_theme_activate
+      if approve_from_user == 'yes'
+
+        # Clean Database
+        Mongoid.purge! unless Rails.env.test?
+
+        # Clean stale memoization
+        Settings.list(true)
+
+        create_initial_list
+        create_initial_settings
+        default_theme_register
+        default_theme_activate
+
+        # Report to user
+        notify
+      end
+    end
+
+    def approve_from_user
+      unless Rails.env.test?
+        setup_notice = <<-END
+            The system indicates it has not been setup.
+            Would you like to run setup?  This will purge.
+            Your database.  To accept, type "yes", anything
+            else will cancel this action.
+        END
+        puts setup_notice
+
+        value = gets.chomp
+      end
+
+      value = "yes" if Rails.env.test?
+      return value
+    end
+
+    def notify
+      unless Rails.env.test?
+        notify = <<-END
+          Your system has now been setup and is ready for use.
+        END
+        puts notify
+      end
     end
 
     def create_initial_list

@@ -3,11 +3,11 @@ module Ryte::Theme::Precompiler
   class << self
 
     def _env
-      @_env ||= Rails.application.assets
+      Rails.application.assets
     end
 
     def _paths
-      @_paths ||= Rails.application.config.assets.paths
+      Rails.application.config.assets.paths
     end
 
     def run!
