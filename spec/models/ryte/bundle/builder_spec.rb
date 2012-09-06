@@ -5,7 +5,7 @@ describe Ryte::Bundle::Builder do
   let(:theme) { Ryte::Theme.new('default') }
 
   before :each do
-    Ryte::Setting::List.create
+    clear_settings
   end
 
   describe "build!" do
@@ -43,7 +43,6 @@ describe Ryte::Bundle::Builder do
 
     it "should persist settings to the databse" do
       expect {
-        binding.pry
         @theme.commit
       }.to change(Settings.all, :count).by(1)
     end

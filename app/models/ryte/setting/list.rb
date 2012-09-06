@@ -31,18 +31,14 @@ class Ryte::Setting::List
       self.list.settings.where(type: type).to_a
     end
 
+    def load(settings)
+      self.list.settings << settings
+      self.save_and_reload
+    end
+
     def save_and_reload
       Settings.list.save
       Settings.list(true)
-    end
-
-    def load(settings)
-      self.all << settings
-      self.list.save
-      self.list(true)
-    end
-    def theme_settings_path(type)
-      File.join(Settings.users_path, type, current_theme, 'settings.yml')
     end
 
     def users_path

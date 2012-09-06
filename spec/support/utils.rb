@@ -6,3 +6,8 @@ def setup_current_theme
     bundle: "system",
     type: "system")])
 end
+
+def clear_settings
+  settings = Settings.all
+  settings.each { |x| x.destroy }
+end

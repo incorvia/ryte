@@ -16,6 +16,7 @@ end
 group :development, :test do
   gem 'rspec-rails'
   gem 'guard'
+  gem 'rb-fsevent', '~> 0.9.1'
   gem 'factory_girl_rails'
   gem 'guard-rspec'
   gem 'pry'

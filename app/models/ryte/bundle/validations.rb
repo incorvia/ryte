@@ -21,23 +21,20 @@ module Ryte::Bundle::Validations
     unless name =~ Ryte::Setting::NAME_REGEX
       errors.add(:name, "Name is invalid")
     end
-    return_errors(:name)
   end
 
   def validate_files
     unless missing_files.empty?
       errors.add(:files, "File list is incomplete")
     end
-    return_errors(:files)
   end
 
   def validate_keys
-    (settings_hash || {}).each do |key, bundle|
+    settings_hash.each do |key, bundle|
       unless bundle.try(:keys) == BUNDLE_KEYS
         errors.add(:settings_hash, "Bundle #{name} contains invalid keys")
       end
     end
-    return_errors(:settings_hash)
   end
 
   def validate_settings
@@ -48,7 +45,6 @@ module Ryte::Bundle::Validations
         end
       end
     end
-    return_errors(:settings)
   end
 
   def missing_files
@@ -56,9 +52,5 @@ module Ryte::Bundle::Validations
       File.join(Settings.users_path, self.to_type, name, x)
     end
     return (required - files)
-  end
-
-  def return_errors(type)
-    errors.messages[type].nil? ? true : false
   end
 end

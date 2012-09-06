@@ -2,4 +2,11 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
-  hello: "Hello world"
+  setup:
+    notices:
+      approval: |-
+        The system indicates it has not been setup.
+        Would you like to run setup?  This will purge.
+        Your database.  To accept, type "yes", anything
+        else will cancel this action.
+      success: "Your system has now been setup and is ready for use."
