@@ -14,12 +14,12 @@ module Ryte::Bundle::Core
     @settings_hash = load_settings
   end
 
-  def bundle_dir
-    File.join(Settings.users_path, self.to_type.pluralize, name, "/")
-  end
-
   def bundle_files
     Dir.glob(File.join(bundle_dir, "**/*.*"))
+  end
+
+  def bundle_dir
+    File.join(Settings.users_path, self.to_type.pluralize, name, "/")
   end
 
   def bundle_settings_file
