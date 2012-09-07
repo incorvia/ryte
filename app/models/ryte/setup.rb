@@ -14,11 +14,13 @@ module Ryte::Setup
 
       opts.reverse_merge!(defaults)
 
-      if opts[:approve] && seek_approval == 'yes'
-        clean_env             if opts[:clean]
-        setup_settings        if opts[:settings]
-        setup_theme           if opts[:theme]
-        notify                if opts[:feedback]
+      approve = opts[:approve] ? seek_approval : 'yes'
+
+      if approve == 'yes'
+        clean_env       if opts[:clean]
+        setup_settings  if opts[:settings]
+        setup_theme     if opts[:theme]
+        notify          if opts[:feedback]
       end
     end
 

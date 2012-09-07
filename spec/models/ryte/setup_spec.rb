@@ -2,19 +2,32 @@ require 'spec_helper'
 
 describe Ryte::Setup do
 
-  let(:theme) { Ryte::Theme.new('default') }
-
-  describe ".setup!" do
-
-    it "should purge the database" do
-      Mongoid.should_receive(:purge!)
-      Ryte::Setup.setup!
-    end
+  context 'environment has been setup' do
 
     it "should create a Ryte::Setting::List" do
-      expect {
-        Ryte::Setup.setup!
-      }.to change(Ryte::Setting::List, :count).by(1)
+      Ryte::Setting::List.first.should_not be_nil
+    end
+
+    it "should set Settings.list to the Ryte::Setting::List" do
+      Ryte::Setting::List.first.should eql(Settings.list)
+    end
+
+    it "should create a current_theme setting" do
+      Settings.by_name("current_theme").value.should eql('default')
+    end
+
+    it "should create a system_setup setting" do
+      Settings.by_name("system_setup").value.should eql(true)
+    end
+
+    it "should register the default theme" do
+      Ryte::Theme.should_receive(:register!).with('default')
+      Ryte::Setup.setup!(approve: false, feedback: false)
+    end
+
+    it "should activate the default theme" do
+      Ryte::Theme.should_receive(:activate!).with('default')
+      Ryte::Setup.setup!(approve: false, feedback: false)
     end
   end
 end

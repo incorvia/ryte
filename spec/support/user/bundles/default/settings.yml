@@ -1,0 +1,6 @@
+default:
+  bundle_type: "theme"
+  settings:
+    widget_width:
+      value: "50"
+      display: "# of Pixels"

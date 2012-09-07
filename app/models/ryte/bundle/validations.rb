@@ -49,7 +49,7 @@ module Ryte::Bundle::Validations
 
   def missing_files
     required = self.class::REQUIRED.map do |x|
-      File.join(Settings.users_path, self.to_type, name, x)
+      File.join(Settings.users_path, self.to_type.pluralize, name, x)
     end
     return (required - files)
   end

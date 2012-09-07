@@ -9,6 +9,7 @@ module Ryte::Bundle::Builder
     settings_hash.each do |key, bundle|
       build_settings(key, bundle)
     end
+    return self
   end
 
   def commit
