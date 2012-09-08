@@ -3,11 +3,7 @@ module Ryte::Bundle::Validations
 
   included do
     BUNDLE_KEYS = %w(bundle_type settings)
-    REQUIRED = %w(
-      settings.yml
-      views/posts/index.html.erb
-      stylesheets/styles.css
-    )
+    REQUIRED = %w()
 
     validate :validate_name
     validate :validate_files
@@ -24,6 +20,7 @@ module Ryte::Bundle::Validations
   end
 
   def validate_files
+    binding.pry
     unless missing_files.empty?
       errors.add(:files, "File list is incomplete")
     end

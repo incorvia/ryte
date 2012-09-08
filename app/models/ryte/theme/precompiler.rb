@@ -11,13 +11,13 @@ module Ryte::Theme::Precompiler
     end
 
     def run!
-      self.clean_paths
-      self.append_paths
+      self.load_paths
       self.precompile
     end
 
-    def clean_paths
+    def load_paths
       _env.clear_paths
+      self.append_paths
     end
 
     def append_paths
@@ -43,8 +43,6 @@ module Ryte::Theme::Precompiler
       config.assets.compile = true
       config.assets.digest  = digest unless digest.nil?
       config.assets.digests = {}
-
-      # Inject current_theme_paths
 
       env      = Rails.application.assets
       target   = File.join(Rails.public_path, config.assets.prefix)

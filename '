@@ -9,6 +9,8 @@ describe Ryte::Setting::List do
 
     describe "settings" do
 
+      let(:list_with_settings) { create(:list_with_settings) }
+
       before :each do
         @list = list_with_settings
       end
@@ -125,100 +127,105 @@ describe Ryte::Setting::List do
     end
   end
 
-  describe '.all' do
-
-    it "should return all the settings" do
-      Ryte::Setting::List.all.should =~ Settings.all
-    end
-  end
-
-  describe '.by_name' do
+  describe 'utility functions' do
 
     before :each do
-      @setting = Settings.all.first
+      Ryte::Setting::List.first.settings.delete_all
+      @list = list_with_settings
+      Ryte::Setting::List.instance_variable_set(:@_list, @list)
+      @settings = @list.settings
     end
 
-    it "should return a setting by name" do
-      Ryte::Setting::List.by_name(@setting.name).should eql(@setting)
-    end
-  end
+    describe '.all' do
 
-  describe '.by_bundle' do
-
-    before :each do
-      @setting = Settings.all.first
-      @invalid = Settings.all.last
-      @setting.update_attributes(bundle: 'system')
-      @invalid.update_attributes(bundle: 'invalid')
+      it "should return all the settings" do
+        Ryte::Setting::List.all.should =~ @settings
+      end
     end
 
-    it "should return settings in the bundle" do
-      Ryte::Setting::List.by_bundle(@setting.bundle).should include(@setting)
+    describe '.by_name' do
+
+      before :each do
+        @setting = @list.settings.first
+      end
+
+      it "should return a setting by name" do
+        Ryte::Setting::List.by_name(@setting.name).should eql(@setting)
+      end
     end
 
-    it "should not return a setting not in the bundle" do
-      Ryte::Setting::List.by_bundle(@setting.bundle).should_not include(@invalid)
-    end
-  end
+    describe '.by_bundle' do
 
-  describe '.by_type' do
+      before :each do
+        @setting = @list.settings.first
+        @invalid = @list.settings.last
+        @invalid.update_attributes(bundle: 'invalid')
+      end
 
-    before :each do
-      @setting = Settings.all.first
-      @invalid = Settings.all.last
-      @setting.update_attributes(type: 'system')
-      @invalid.update_attributes(type: 'invalid')
-    end
+      it "should return a setting by name" do
+        Ryte::Setting::List.by_bundle(@setting.bundle).should include(@setting)
+      end
 
-    it "should return a setting by name" do
-      Ryte::Setting::List.by_type(@setting.type).should include(@setting)
-    end
-
-    it "should not return a setting not in the type" do
-      Ryte::Setting::List.by_type(@setting.type).should_not include(@invalid)
-    end
-  end
-
-  describe ".load" do
-
-    before :each do
-      Settings.all.delete_all
+      it "should not return a setting not in the bundle" do
+        Ryte::Setting::List.by_bundle(@setting.bundle).should_not include(@invalid)
+      end
     end
 
-    it "should save a list of settings" do
-      expect {
-        Settings.load([build(:ryte_setting)])
-      }.to change(Settings.all, :count).by(1)
+    describe '.by_type' do
+
+      before :each do
+        @setting = @list.settings.first
+        @invalid = @list.settings.last
+        @invalid.update_attributes(type: 'system')
+      end
+
+      it "should return a setting by name" do
+        Ryte::Setting::List.by_type(@setting.type).should include(@setting)
+      end
+
+      it "should not return a setting not in the type" do
+        Ryte::Setting::List.by_type(@setting.type).should_not include(@invalid)
+      end
     end
-  end
 
-  describe ".save_and_reload" do
+    describe ".load" do
 
-    before :each do
-      @list = Settings.list
+      before :each do
+        binding.pry
+        Settings.all.delete_all
+      end
+
+      it "should save a list of settings" do
+        expect {
+          Settings.load([build(:ryte_setting)])
+        }.to change(Settings.all, :count).by(1)
+      end
     end
 
-    it "should call save on the settings list" do
-      @list.should_receive(:save)
-      Settings.save_and_reload
-    end
+    describe ".save_and_reload" do
 
-    it "should receive 'list' with refresh true" do
-      Settings.stub_chain(:list, :save).and_return(true)
-      Settings.should_receive(:list).with(true)
-      Settings.save_and_reload
-    end
-  end
+      before :each do
+        @list = Settings.list
+      end
 
-  describe '.users_path' do
+      it "should call save on the settings list" do
+        @list.should_receive(:save)
+        Settings.save_and_reload
+      end
 
-    it 'should be correct' do
-      path = File.join(Rails.root, 'spec', 'support', 'user')
-      Settings.users_path.should eql(path)
+      it "should receive 'list' with refresh true" do
+        Settings.stub_chain(:list, :save).and_return(true)
+        Settings.should_receive(:list).with(true)
+        Settings.save_and_reload
+      end
     end
   end
 
   describe ".current_theme" do
+
+    before :each do
+      setup_current_theme
+    end
 
     it "should call 'by_name' on settings" do
       Settings.current_theme.should eql('default')
@@ -228,6 +235,7 @@ describe Ryte::Setting::List do
   describe "current_theme=" do
 
     before :each do
+      setup_current_theme
       Settings.current_theme.should eql('default')
     end
 

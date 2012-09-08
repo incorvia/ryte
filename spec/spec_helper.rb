@@ -39,15 +39,10 @@ RSpec.configure do |config|
   config.order = "random"
 
   config.before :each do
-    Mongoid.purge!
-    Ryte::Setup.setup!(approve: false, feedback: false)
-    Ryte::Setting::List.instance_variable_set(:@_list, nil)
-    Ryte::Theme::Precompiler.clean_paths
-    Ryte::Theme::Precompiler.append_paths
+    pre_flight
   end
 
   config.after :each do
-    Mongoid.purge!
-    Ryte::Setting::List.instance_variable_set(:@_list, nil)
+    post_flight
   end
 end

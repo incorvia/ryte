@@ -9,7 +9,7 @@ class Ryte::Setting::List
 
     def list(refresh=false)
       if refresh
-        @_list = self.first
+        @_list   = self.first || self.create
       else
         @_list ||= self.first || self.create
       end
@@ -37,8 +37,8 @@ class Ryte::Setting::List
     end
 
     def save_and_reload
-      Settings.list.save
-      Settings.list(true)
+      self.list.save
+      self.list(true)
     end
 
     def users_path

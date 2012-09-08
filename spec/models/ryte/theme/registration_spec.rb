@@ -37,4 +37,13 @@ describe Ryte::Theme::Registration do
       end
     end
   end
+
+  describe '.activate!' do
+
+    it 'should run the precompiler then set the theme' do
+      Ryte::Theme::Precompiler.should_receive(:run!).ordered
+      Settings.should_receive(:current_theme=).with('default').ordered
+      Ryte::Theme.activate!('default')
+    end
+  end
 end

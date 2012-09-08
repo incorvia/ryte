@@ -2,7 +2,8 @@ module Ryte::Bundle::Builder
   extend ActiveSupport::Concern
 
   def build!
-    build; commit
+    build
+    commit
   end
 
   def build

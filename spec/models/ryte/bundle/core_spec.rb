@@ -65,8 +65,8 @@ describe Ryte::Bundle::Core do
   describe 'bundle_files' do
 
     it 'should return a list of files in the directory' do
-      sample = Ryte::Bundle::REQUIRED.map{ |x| bundle.bundle_dir + x }
-      bundle.bundle_files.should =~ sample
+      sample = File.join(bundle.bundle_dir, 'settings.yml')
+      bundle.bundle_files.should include(sample)
     end
   end
 

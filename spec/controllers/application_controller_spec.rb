@@ -4,14 +4,18 @@ describe ApplicationController do
 
   describe "#set_view_paths" do
 
-    before :each do
-      Ryte::Setting::List.create
-      setup_current_theme
-    end
-
     it "should call prepend_view_path with theme_path" do
-      controller.should_receive(:prepend_view_path).with(controller.send(:theme_path))
+      arg = Settings.current_views_path
+      controller.should_receive(:prepend_view_path).with(arg)
       controller.send(:set_view_paths)
+    end
+  end
+
+  describe "#set_asset_paths" do
+
+    it "should call load paths" do
+      Ryte::Theme::Precompiler.should_receive(:load_paths)
+      controller.send(:set_asset_paths)
     end
   end
 end
