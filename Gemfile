@@ -6,6 +6,7 @@ gem 'rails'
 gem 'mongoid'
 gem 'jquery-rails'
 gem 'configatron'
+gem 'devise'
 
 group :assets do
   gem 'sass-rails'
@@ -19,6 +20,7 @@ group :development, :test do
   gem 'rb-fsevent', '~> 0.9.1'
   gem 'terminal-notifier-guard'
   gem 'factory_girl_rails'
+  gem 'mongoid-rspec'
   gem 'guard-rspec'
   gem 'pry'
   gem 'pry-nav'
