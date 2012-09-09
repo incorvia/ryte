@@ -22,6 +22,5 @@ def setup_current_theme
 end
 
 def clear_settings
-  settings = Settings.all
-  settings.each { |x| x.destroy }
+  Settings.all.delete_all
 end

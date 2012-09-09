@@ -64,7 +64,7 @@ describe Ryte::Setting::List do
 
         it "should refresh from the database" do
           Ryte::Setting::List.should_receive(:first)
-          Ryte::Setting::List.list(true)
+          Ryte::Setting::List.reload
         end
 
         context 'no list' do
@@ -75,7 +75,7 @@ describe Ryte::Setting::List do
 
           it "should create a new list" do
             Ryte::Setting::List.should_receive(:create)
-            Ryte::Setting::List.list(true)
+            Ryte::Setting::List.reload
           end
         end
       end
@@ -99,7 +99,7 @@ describe Ryte::Setting::List do
 
         it "should refresh from the database" do
           Ryte::Setting::List.should_receive(:first)
-          Ryte::Setting::List.list(true)
+          Ryte::Setting::List.reload
         end
       end
 
@@ -129,6 +129,14 @@ describe Ryte::Setting::List do
 
     it "should return all the settings" do
       Ryte::Setting::List.all.should =~ Settings.all
+    end
+  end
+
+  describe '.reload' do
+
+    it "should call 'list' with refresh set to true" do
+      Settings.should_receive(:list).with(true)
+      Ryte::Setting::List.reload
     end
   end
 

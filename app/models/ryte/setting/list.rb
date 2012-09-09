@@ -19,6 +19,10 @@ class Ryte::Setting::List
       self.list.settings
     end
 
+    def reload
+      Settings.list(true)
+    end
+
     def by_name(name)
       self.list.settings.where(name: name).first
     end
@@ -38,7 +42,7 @@ class Ryte::Setting::List
 
     def save_and_reload
       self.list.save
-      self.list(true)
+      self.reload
     end
 
     def users_path

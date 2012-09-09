@@ -16,6 +16,10 @@ describe Ryte::Setup do
       Settings.by_name("current_theme").value.should eql('default')
     end
 
+    it "should create a registered_themes setting" do
+      Settings.by_name("registered_themes").value.should eql(['default'])
+    end
+
     it "should create a system_setup setting" do
       Settings.by_name("system_setup").value.should eql(true)
     end
