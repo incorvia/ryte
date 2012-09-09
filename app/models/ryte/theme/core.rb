@@ -1,8 +1,10 @@
-module Ryte::Theme::Validations
+module Ryte::Theme::Core
   extend ActiveSupport::Concern
 
-  included do
-    REQUIRED = %w(
+  def initialize(*args)
+    super(*args)
+
+    @required_files = %w(
       settings.yml
       views/posts/index.html.erb
       stylesheets/styles.css

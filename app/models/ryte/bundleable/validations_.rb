@@ -1,10 +1,7 @@
-module Ryte::Bundle::Validations
+module Ryte::Bundleable::Validations_
   extend ActiveSupport::Concern
 
   included do
-    BUNDLE_KEYS = %w(bundle_type settings)
-    REQUIRED = %w()
-
     validate :validate_name
     validate :validate_files
     validate :validate_keys
@@ -20,7 +17,6 @@ module Ryte::Bundle::Validations
   end
 
   def validate_files
-    binding.pry
     unless missing_files.empty?
       errors.add(:files, "File list is incomplete")
     end
@@ -28,7 +24,7 @@ module Ryte::Bundle::Validations
 
   def validate_keys
     settings_hash.each do |key, bundle|
-      unless bundle.try(:keys) == BUNDLE_KEYS
+      unless bundle.try(:keys) == required_keys
         errors.add(:settings_hash, "Bundle #{name} contains invalid keys")
       end
     end
@@ -45,7 +41,7 @@ module Ryte::Bundle::Validations
   end
 
   def missing_files
-    required = self.class::REQUIRED.map do |x|
+    required = required_files.map do |x|
       File.join(Settings.users_path, self.to_type.pluralize, name, x)
     end
     return (required - files)

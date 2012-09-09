@@ -1,8 +1,12 @@
 require 'spec_helper'
 
-describe Ryte::Bundle::Core do
+describe Ryte::Bundleable::Core_ do
 
-  let(:bundle) { Ryte::Bundle.new('default') }
+  class Mock
+    include Ryte::Bundleable
+  end
+
+  let(:bundle) { Mock.new('default') }
 
   before :each do
     @file_path = bundle.bundle_settings_file
@@ -11,7 +15,8 @@ describe Ryte::Bundle::Core do
 
   describe 'accessors' do
 
-    accessors = [:name, :files, :settings_file, :settings, :settings_hash]
+    accessors = [:name, :files, :settings_file, :settings, :settings_hash,
+    :required_files, :required_keys]
 
     accessors.each do |attr|
       describe "#{attr}" do
@@ -60,6 +65,36 @@ describe Ryte::Bundle::Core do
         bundle.send(:initialize, 'default')
       end
     end
+
+    describe 'required_files' do
+
+      it "should be an empty array" do
+        bundle.required_files.should eql([])
+      end
+    end
+
+    describe 'required_keys' do
+
+      it "should be an empty array" do
+        bundle.required_keys.should eql(['bundle_type', 'settings'])
+      end
+    end
+  end
+
+  describe "commit" do
+
+    before :each do
+      # Delete settings from env setup.
+      Settings.all.where(name: "widget_width").first.delete
+    end
+
+    let(:built_bundle) { bundle.build }
+
+    it "should persist settings to the databse" do
+      expect {
+        built_bundle.commit
+      }.to change(Settings.all, :count).by(1)
+    end
   end
 
   describe 'bundle_files' do
@@ -74,7 +109,7 @@ describe Ryte::Bundle::Core do
 
     it 'should be the correct directory' do
       d = File.join(Rails.root, 'spec', 'support',
-                    'user', 'bundles', 'default', '/')
+                    'user', 'mocks', 'default', '/')
       bundle.bundle_dir.should eql(d)
     end
   end
@@ -116,7 +151,7 @@ describe Ryte::Bundle::Core do
   describe "to_type" do
 
     it "should return a downcased bundle type" do
-      bundle.to_type.should eql('bundle')
+      bundle.to_type.should eql('mock')
     end
   end
 end

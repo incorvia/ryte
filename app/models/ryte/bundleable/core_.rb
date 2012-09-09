@@ -1,17 +1,23 @@
-module Ryte::Bundle::Core
+module Ryte::Bundleable::Core_
   extend ActiveSupport::Concern
 
   included do
-    attr_accessor :name, :files, :settings_file,
-      :settings, :settings_hash
+    attr_accessor :name, :files, :settings_file, :settings,
+      :settings_hash, :required_files, :required_keys
   end
 
   def initialize(name)
-    @name          = name
-    @files         = bundle_files
-    @settings_file = bundle_settings_file
-    @settings      = []
-    @settings_hash = load_settings
+    @name           = name
+    @files          = bundle_files
+    @settings_file  = bundle_settings_file
+    @settings       = []
+    @settings_hash  = load_settings
+    @required_files = %w()
+    @required_keys  = %w(bundle_type settings)
+  end
+
+  def commit
+    Settings.load(settings) if valid?
   end
 
   def bundle_files

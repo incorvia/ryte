@@ -1,6 +1,6 @@
 # Read about factories at https://github.com/thoughtbot/factory_girl
 
 FactoryGirl.define do
-  factory :ryte_bundle_validation, :class => 'Ryte::Bundle::Validations' do
+  factory :ryte_theme_core, :class => 'Ryte::Theme::Core' do
   end
 end

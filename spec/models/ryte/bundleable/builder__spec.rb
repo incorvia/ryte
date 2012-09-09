@@ -1,8 +1,12 @@
 require 'spec_helper'
 
-describe Ryte::Bundle::Builder do
+describe Ryte::Bundleable::Builder_ do
 
-  let(:bundle) { Ryte::Bundle.new('default') }
+  class Mock
+    include Ryte::Bundleable
+  end
+
+  let(:bundle) { Mock.new('default') }
 
   describe "build!" do
 
@@ -27,23 +31,7 @@ describe Ryte::Bundle::Builder do
     end
 
     it "returns self" do
-      bundle.build.should be_an_instance_of(Ryte::Bundle)
-    end
-  end
-
-  describe "commit" do
-
-    before :each do
-      # Delete settings from env setup.
-      Settings.all.where(name: "widget_width").first.delete
-    end
-
-    let(:built_bundle) { bundle.build }
-
-    it "should persist settings to the databse" do
-      expect {
-        built_bundle.commit
-      }.to change(Settings.all, :count).by(1)
+      bundle.build.should be_an_instance_of(Mock)
     end
   end
 

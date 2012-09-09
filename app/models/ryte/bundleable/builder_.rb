@@ -1,4 +1,4 @@
-module Ryte::Bundle::Builder
+module Ryte::Bundleable::Builder_
   extend ActiveSupport::Concern
 
   def build!
@@ -12,12 +12,6 @@ module Ryte::Bundle::Builder
     end
     return self
   end
-
-  def commit
-    Settings.load(settings) if valid?
-  end
-
-  private
 
   def build_settings(name, bundle)
     if bundle[:settings].is_a?(Hash)
