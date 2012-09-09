@@ -46,7 +46,7 @@ describe Ryte::Bundleable::Core_ do
 
     describe "settings_file" do
 
-      it "should be settings file" do
+      it "should be a settings file" do
         bundle.settings_file.to_path.should match(/settings.yml/)
       end
     end
@@ -75,7 +75,7 @@ describe Ryte::Bundleable::Core_ do
 
     describe 'required_keys' do
 
-      it "should be an empty array" do
+      it "should contain required key names" do
         bundle.required_keys.should eql(['bundle_type', 'settings'])
       end
     end
