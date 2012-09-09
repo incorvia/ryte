@@ -6,7 +6,7 @@ module Ryte::Theme::Core
 
     @required_files = %w(
       settings.yml
-      views/posts/index.html.erb
+      views/index.html.erb
       stylesheets/styles.css
     )
   end

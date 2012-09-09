@@ -12,7 +12,7 @@ describe Ryte::Theme::Core do
 
       it "should have theme specific required files" do
         r.should include('settings.yml')
-        r.should include('views/posts/index.html.erb')
+        r.should include('views/index.html.erb')
         r.should include('stylesheets/styles.css')
       end
     end

@@ -1,5 +1,5 @@
 Ryte::Application.routes.draw do
-  devise_for :admins, :class_name => "Ryte::Admin", :controllers => { :sessions => "admin/sessions" }
+  devise_for :admins, :class_name => "Ryte::Admin", :controllers => { :sessions => "ryte/admin/sessions" }
 
-  root to: 'posts#index'
+  root to: 'ryte/public/posts#index'
 end
