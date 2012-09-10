@@ -17,6 +17,7 @@ end
 group :development, :test do
   gem 'rspec-rails'
   gem 'guard'
+  gem 'webrat'
   gem 'rb-fsevent', '~> 0.9.1'
   gem 'terminal-notifier-guard'
   gem 'factory_girl_rails'

@@ -2,5 +2,8 @@
 
 FactoryGirl.define do
   factory :ryte_admin, :class => 'Ryte::Admin' do
+    email                 'test@example.org'
+    password              'password'
+    password_confirmation 'password'
   end
 end

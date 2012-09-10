@@ -10,6 +10,7 @@ module Ryte::Setup
         settings:  true,
         theme:     true,
         feedback:  true,
+        users:     true,
       }
 
       opts.reverse_merge!(defaults)
@@ -19,6 +20,7 @@ module Ryte::Setup
       if approve == 'yes'
         clean_env       if opts[:clean]
         setup_settings  if opts[:settings]
+        setup_users     if opts[:users]
         setup_theme     if opts[:theme]
         notify          if opts[:feedback]
       end
@@ -80,6 +82,12 @@ module Ryte::Setup
       }
 
       Ryte::Setting.new(values)
+    end
+
+    def setup_users
+      Ryte::Admin.create(email:  'user@admin.org',
+                         password: 'password',
+                         password_confirmation: 'password')
     end
 
     def setup_theme

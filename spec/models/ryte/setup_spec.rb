@@ -12,6 +12,10 @@ describe Ryte::Setup do
       Ryte::Setting::List.first.should eql(Settings.list)
     end
 
+    it "should setup a default user" do
+      Ryte::Admin.first.email.should eql('user@admin.org')
+    end
+
     it "should create a current_theme setting" do
       Settings.by_name("current_theme").value.should eql('default')
     end
