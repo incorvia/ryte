@@ -7,9 +7,13 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-
-<%= yield %>
-
+  <header>
+    <%= render 'ryte/admin/shared/header' %>
+  </header>
+  <section class='row span14'>
+    <%= render 'ryte/admin/shared/menu' if admin_signed_in? %>
+    <%= yield %>
+  </section>
 </body>
 </html>
 

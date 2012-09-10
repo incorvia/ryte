@@ -66,7 +66,7 @@ module Ryte
     config.assets.precompile += ['admin.js', 'admin.css', 'public.css', 'public.js']
 
     # Version of your assets, change this if you want to expire all your assets
-    config.assets.version = '1.0'
+    config.assets.version = '1.1'
 
     # Supress Helper generation
     config.generators.helper = false
