@@ -1,4 +1,6 @@
 class Ryte::Public::BaseController < ApplicationController
+  layout 'public'
+
   before_filter :set_view_paths
   before_filter :set_asset_paths unless Rails.env.production?
 
