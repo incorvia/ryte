@@ -25,3 +25,8 @@ h1 {
   font-size: 25px;
 }
 
+/* ---------- Form Styles ---------- */
+
+form {
+  margin-left: 0px !important;
+}
