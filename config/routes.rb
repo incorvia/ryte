@@ -1,7 +1,12 @@
 Ryte::Application.routes.draw do
   devise_for :admins, :class_name => "Ryte::Admin", :controllers => { :sessions => "ryte/admin/sessions" }
 
-  match '/dashboard', to: 'ryte/admin/cms#dashboard', as: 'admin_root'
+  scope module: :ryte do
+    namespace :admin do
+      resources :posts
+      match '/dashboard', to: 'cms#dashboard', as: "root"
+    end
+  end
 
   root to: 'ryte/public/posts#index'
 end

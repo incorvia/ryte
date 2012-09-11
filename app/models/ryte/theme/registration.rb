@@ -6,7 +6,6 @@ module Ryte::Theme::Registration
     def register!(name)
       theme = self.new(name)
 
-      binding.pry
       if theme.valid?
         theme.build!
         theme.add_to_registered_themes
