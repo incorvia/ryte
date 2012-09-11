@@ -4,5 +4,6 @@ class Ryte::Admin::PostsController < Ryte::Admin::BaseController
   end
 
   def new
+    @post = Ryte::Post.new
   end
 end
