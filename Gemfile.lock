@@ -83,6 +83,9 @@ GEM
       mongoid (>= 3.0.1)
       rake
       rspec (>= 2.9)
+    mongoid-slugify (0.1.0)
+      activesupport (~> 3.0)
+      mongoid (>= 2.0, < 4.0)
     moped (1.2.1)
     multi_json (1.3.6)
     nokogiri (1.5.5)
@@ -175,6 +178,7 @@ DEPENDENCIES
   jquery-rails
   mongoid
   mongoid-rspec
+  mongoid-slugify
   pry
   pry-nav
   rails

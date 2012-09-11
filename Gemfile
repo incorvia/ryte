@@ -7,6 +7,7 @@ gem 'mongoid'
 gem 'jquery-rails'
 gem 'configatron'
 gem 'devise'
+gem 'mongoid-slugify'
 
 group :assets do
   gem 'sass-rails'
