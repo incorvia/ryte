@@ -11,4 +11,8 @@ class Ryte::Public::BaseController < ApplicationController
   def set_asset_paths
     Ryte::Theme::Precompiler.load_paths
   end
+
+  def renderer
+    Braai::Template.new(@view).render
+  end
 end

@@ -35,6 +35,8 @@ GEM
     bcrypt-ruby (3.0.1)
     bootstrap-wysihtml5-rails (0.3.1)
       railties (>= 3.0)
+    braai (1.1.0)
+      activesupport
     builder (3.0.3)
     coderay (1.0.7)
     coffee-rails (3.2.2)
@@ -176,6 +178,7 @@ PLATFORMS
 DEPENDENCIES
   anjlab-bootstrap-rails (>= 2.1)
   bootstrap-wysihtml5-rails
+  braai
   coffee-rails
   configatron
   devise

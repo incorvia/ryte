@@ -28,6 +28,11 @@ describe Ryte::Admin::PostsController do
         get :new
         response.should be_successful
       end
+
+      it "should assign a @post variable" do
+        get :new
+        assigns[:post].should be_an_instance_of(Ryte::Post)
+      end
     end
   end
 end

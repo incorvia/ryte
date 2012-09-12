@@ -6,6 +6,18 @@ describe Ryte::Admin::CmsController do
 
     let(:admin) { create(:ryte_admin) }
 
+    describe "get" do
+
+      before :each do
+        sign_in(admin)
+      end
+
+      it "should be successful" do
+        get :dashboard
+        response.should be_successful
+      end
+    end
+
     context 'signed in' do
 
       before :each do
