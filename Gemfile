@@ -7,9 +7,9 @@ gem 'mongoid'
 gem 'jquery-rails'
 gem 'configatron'
 gem 'devise'
-gem 'mongoid-slugify'
 gem 'anjlab-bootstrap-rails', '>= 2.1', :require => 'bootstrap-rails'
 gem 'bootstrap-wysihtml5-rails'
+gem 'strong_parameters'
 
 group :assets do
   gem 'sass-rails'

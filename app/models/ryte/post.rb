@@ -1,5 +1,6 @@
 class Ryte::Post
   include Mongoid::Document
+  include ActiveModel::ForbiddenAttributesProtection
 
-  field :text, :type => String, :default => ""
+  field :body, type: String, default: ""
 end
