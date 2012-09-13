@@ -35,4 +35,18 @@ describe Ryte::Admin::PostsController do
       end
     end
   end
+
+  describe 'create' do
+
+    context 'valid parameters' do
+
+      let(:valid) { { post: build(:ryte_post).attributes } }
+
+      it "should create a post" do
+        expect {
+          post :create, valid
+        }.to change(Ryte::Post, :count).by(1)
+      end
+    end
+  end
 end
