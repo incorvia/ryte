@@ -12,7 +12,11 @@ class Ryte::Public::BaseController < ApplicationController
     Ryte::Theme::Precompiler.load_paths
   end
 
-  def renderer
-    Braai::Template.new(@view).render
+  def template
+    Settings.current_template(params[:action]).read
+  end
+
+  def render_template(opts={})
+    render text: Braai::Template.new(template).render(opts), layout: true
   end
 end
