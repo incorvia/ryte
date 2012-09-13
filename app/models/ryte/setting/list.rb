@@ -71,7 +71,7 @@ class Ryte::Setting::List
     end
 
     def current_template_path(action)
-      File.join(current_theme_path, "views", "#{action}.html.erb")
+      File.join(current_theme_path, "views", "#{action}.html")
     end
 
     def current_template(action)
