@@ -10,13 +10,13 @@ class Ryte::Theme::Matchers
   end
 
   # Partials
-  Braai::Template.map(/{{(\s*partial\s*(\w*)\s*(\|.*)?)}}/i) do |template, key, matches|
-    path        = File.join(Settings.current_views_path, "_#{matches[1]}.html")
+  Braai::Template.map(/({{(\s*partial\s*(\w*)\s*(\|.*)?)}})/i) do |template, key, matches|
+    path        = File.join(Settings.current_views_path, "_#{matches[2]}.html")
     partial     = "#{File.open(path).read}"
     attributes  = {}
 
-    if matches[2]
-      attr_set    = matches[2][1..-1].strip.split(',') if matches[2]
+    if matches[3]
+      attr_set    = matches[3][1..-1].strip.split(',') if matches[3]
 
       attr_set.each do |hash|
         kv_array  = hash.split(":")
