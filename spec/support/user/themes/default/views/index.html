@@ -1,5 +1,7 @@
 Hello from: (Theme: Index)
 
 {{ for post in posts }}
-  <p>{{ post.body }}
-{{ /for }}
+  <p>{{ post.body }}</p>
+  {{ /for }}
+
+{{ render header | post: post }}

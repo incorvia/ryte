@@ -1,9 +1,9 @@
-<h1>Hello World</h1>
+<div id='page'>
+  {{ partial header }}
 
-<a href="{{ admin_path }}">Admin</a>
+  <h1>Posts</h1>
 
-<h1>Posts</h1>
-
-{{ for post in posts }}
-  <p>{{ post.body }}</p>
-{{ /for }}
+  {{ for post in posts }}
+    <p>{{ post.body }}</p>
+  {{ /for }}
+</div>

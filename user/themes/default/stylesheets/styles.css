@@ -1,3 +1,26 @@
+/* Default Theme Stylings
+
+
+/*-------- Font Styles --------*/
+
 h1 {
   font-size: 25px;
+}
+
+/*------ Structure Styles -----*/
+
+#page {
+  width:980px; margin:0 auto;
+}
+
+#header {
+  position:relative; padding:20px 0 40px 0; margin-bottom:40px;
+}
+
+#posts {
+  float:left; width:640px;
+}
+
+#sidebar {
+  float:right; width:300px;
 }
