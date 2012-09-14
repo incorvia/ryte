@@ -9,18 +9,18 @@ h1 {
 
 /*------ Structure Styles -----*/
 
-#page {
-  width:980px; margin:0 auto;
-}
+/* header */
+#page { width:980px; margin:0 auto; }
+#header { position:relative; padding:20px 0 40px 0; margin-bottom:40px;}
+#posts { float:left; width:640px; }
 
-#header {
-  position:relative; padding:20px 0 40px 0; margin-bottom:40px;
-}
+/* navigation */
+.nav { padding:10px 0px; margin: 20px 0px; background: #777 }
+.nav ul { list-style: none; margin: 10px 0px; display: inline; }
+.nav ul li { display: inline; }
+.nav li a { color:#fff; }
+.nav li a { font-weight:normal; text-decoration:none; margin:10px;  }
+.nav li a { font-family: 'Helvetica' }
 
-#posts {
-  float:left; width:640px;
-}
-
-#sidebar {
-  float:right; width:300px;
-}
+/* sidebar */
+#sidebar { float:right; width:300px; }
