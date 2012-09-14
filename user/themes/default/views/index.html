@@ -1,9 +1,8 @@
 <div id='page'>
   {{ partial header }}
 
-  <h1>Posts</h1>
-
   {{ for post in posts }}
+    <h2>{{ post.title }}</h2>
     <p>{{ post.body }}</p>
   {{ /for }}
 </div>

@@ -22,11 +22,32 @@ describe Ryte::Theme::Precompiler do
 
   describe 'run!' do
 
-    it 'should receive load_paths and precompile ordered' do
-      @_pfix.should_receive(:load_paths).ordered
-      @_pfix.should_receive(:precompile).ordered
-      @_pfix.run!
+    context 'compress is true' do
+
+      before :each do
+        Ryte::Application.stub_chain(:config, :assets, :compress).and_return(true)
+      end
+
+      it 'should receive load_paths and precompile ordered' do
+        @_pfix.should_receive(:load_paths).ordered
+        @_pfix.should_receive(:precompile).ordered
+        @_pfix.run!
+      end
     end
+
+    context 'compress is false' do
+
+      before :each do
+        Ryte::Application.stub_chain(:config, :assets, :compress).and_return(false)
+      end
+
+      it 'should receive load_paths and precompile ordered' do
+        @_pfix.should_receive(:load_paths).ordered
+        @_pfix.should_not_receive(:precompile).ordered
+        @_pfix.run!
+      end
+    end
+
   end
 
   describe 'load_paths' do

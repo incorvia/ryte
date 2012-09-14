@@ -12,7 +12,7 @@ module Ryte::Theme::Precompiler
 
     def run!
       self.load_paths
-      self.precompile
+      self.precompile if Ryte::Application.config.assets.compress
     end
 
     def load_paths

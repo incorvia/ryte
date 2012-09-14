@@ -8,7 +8,6 @@ end
 
 def post_flight
   Ryte::Setting::List.instance_variable_set(:@_list, nil)
-  FileUtils.rm_rf(File.join(Rails.root, 'public', 'assets'))
 end
 
 #----------- Settings Utilities -----------
