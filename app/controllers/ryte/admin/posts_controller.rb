@@ -8,6 +8,10 @@ class Ryte::Admin::PostsController < Ryte::Admin::BaseController
     @post = Ryte::Post.new
   end
 
+  def edit
+    @post = Ryte::Post.find(params[:id])
+  end
+
   def create
     Ryte::Post.create(post_params)
     redirect_to new_admin_post_path
