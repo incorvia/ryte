@@ -1,3 +1,14 @@
 <div class='span8'>
-  <h3> Posts Index </h3>
+  <h3> Posts </h3>
+    <table class="table table-condensed table-hover">
+      <thead>
+        <tr>
+          <th>Title<th>
+          <th>Status<th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= render collection: @posts, partial: 'ryte/admin/posts/post' %>
+      </tbody>
+    </table>
 </div>

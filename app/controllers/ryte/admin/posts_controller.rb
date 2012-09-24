@@ -1,6 +1,7 @@
 class Ryte::Admin::PostsController < Ryte::Admin::BaseController
 
   def index
+    @posts = Ryte::Post.all
   end
 
   def new
