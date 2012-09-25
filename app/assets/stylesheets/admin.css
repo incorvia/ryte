@@ -19,11 +19,14 @@
 
 body { background-color: #eee; }
 h1 { font-size: 25px; }
+h3 { margin-top: 0px; }
 
 /* ---------- Base Styles ---------- */
 
 .container { width: 960px; }
+.container .span7 { margin-left: 0px; }
 .nav-list { padding-left: 0px; }
+.info { width: 200px; padding-left: 20px; }
 
 /* ---------- Form Styles ---------- */
 

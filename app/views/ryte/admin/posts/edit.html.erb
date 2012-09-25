@@ -1,6 +1,10 @@
-<h3> Edit Post </h3>
-<%= form_for @post, as: :post, url: admin_posts_path(@post), html: { :class => "span9" } do |f| %>
-  <%= f.text_field :title, class: "span9" %><br />
-  <%= f.text_area :body, class: "wysiyg span9" %><br />
-  <%= f.submit "Publish", class: "btn btn-primary pull-right"%>
-<% end %>
+<div class="span7">
+  <h3> Edit Post </h3>
+  <%= form_for @post, as: :post, url: admin_posts_path(@post), html: { :class => "span7" } do |f| %>
+    <%= f.text_field :title, class: "span7" %>
+    <%= f.text_area :body, class: "wysiyg span7" %>
+    <%= f.submit "Publish", class: "btn btn-primary pull-right"%>
+  <% end %>
+</div>
+<%= render 'meta' %>
+

@@ -1,6 +1,9 @@
-<h3> New Post </h3>
-<%= form_for @post, as: :post, url: admin_posts_path(@post), html: { :class => "span8" } do |f| %>
-  <%= f.text_field :title, class: "span8" %>
-  <%= f.text_area :body, class: "wysiyg span8" %>
-  <%= f.submit "Publish", class: "btn btn-primary pull-right"%>
-<% end %>
+<div class="span7">
+  <h3> New Post </h3>
+  <%= form_for @post, as: :post, url: admin_posts_path(@post), html: { :class => "span7" } do |f| %>
+    <%= f.text_field :title, class: "span7" %>
+    <%= f.text_area :body, class: "wysiyg span7" %>
+    <%= f.submit "Publish", class: "btn btn-primary pull-right"%>
+  <% end %>
+</div>
+<%= render 'meta' %>
