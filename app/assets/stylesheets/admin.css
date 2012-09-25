@@ -17,16 +17,14 @@
 
 /* ---------- Base Styles ---------- */
 
-body {
-  background-color: #eee;
-}
+body { background-color: #eee; }
+h1 { font-size: 25px; }
 
-h1 {
-  font-size: 25px;
-}
+/* ---------- Base Styles ---------- */
+
+.container { width: 960px; }
+.nav-list { padding-left: 0px; }
 
 /* ---------- Form Styles ---------- */
 
-form {
-  margin-left: 0px !important;
-}
+form { margin-left: 0px !important; }

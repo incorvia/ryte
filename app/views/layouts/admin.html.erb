@@ -10,9 +10,13 @@
   <header>
     <%= render 'ryte/admin/shared/header' %>
   </header>
-  <section class='row span14'>
-    <%= render 'ryte/admin/shared/menu' if admin_signed_in? %>
-    <%= yield %>
+  <section class="container">
+    <div class="span2">
+      <%= render 'ryte/admin/shared/menu' if admin_signed_in? %>
+    </div>
+    <div class="span10">
+      <%= yield %>
+    </div>
   </section>
 </body>
 </html>
