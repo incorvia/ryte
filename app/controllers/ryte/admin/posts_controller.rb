@@ -20,6 +20,6 @@ class Ryte::Admin::PostsController < Ryte::Admin::BaseController
   private
 
   def post_params
-    params.require(:post).permit(:body, :title)
+    params.require(:post).permit(:body, :title, :status)
   end
 end

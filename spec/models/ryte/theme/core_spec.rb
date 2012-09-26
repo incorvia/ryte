@@ -10,7 +10,7 @@ describe Ryte::Theme::Core do
 
       let(:r) { theme.required_files }
 
-      it "should have theme specific required files" do
+      it "have theme specific required files" do
         r.should include('settings.yml')
         r.should include('views/index.html')
         r.should include('stylesheets/styles.css')

@@ -4,7 +4,7 @@ describe Ryte::Public::BaseController do
 
   describe "#set_view_paths" do
 
-    it "should call prepend_view_path with theme_path" do
+    it "call prepend_view_path with theme_path" do
       arg = Settings.current_views_path
       controller.should_receive(:prepend_view_path).with(arg)
       controller.send(:set_view_paths)
@@ -13,7 +13,7 @@ describe Ryte::Public::BaseController do
 
   describe "#set_asset_paths" do
 
-    it "should call load paths" do
+    it "call load paths" do
       Ryte::Theme::Precompiler.should_receive(:load_paths)
       controller.send(:set_asset_paths)
     end
@@ -26,7 +26,7 @@ describe Ryte::Public::BaseController do
       @res = controller.send(:template)
     end
 
-    it "should return the current actions template" do
+    it "return the current actions template" do
       @res.should match(/Theme:\ Index/i)
     end
   end
@@ -41,7 +41,7 @@ describe Ryte::Public::BaseController do
       create(:ryte_post)
     end
 
-    it "should render the template" do
+    it "render the template" do
       get :index
       response.should contain('This is the body of a Ryte Post')
     end

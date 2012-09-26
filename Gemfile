@@ -11,6 +11,7 @@ gem 'anjlab-bootstrap-rails', '>= 2.1', :require => 'bootstrap-rails'
 gem 'bootstrap-wysihtml5-rails'
 gem 'strong_parameters'
 gem 'braai'
+gem 'mongoid_slug', github: 'digitalplaywright/mongoid-slug'
 
 group :assets do
   gem 'sass-rails'

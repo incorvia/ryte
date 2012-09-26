@@ -13,7 +13,7 @@ describe Ryte::Admin::PostsController do
 
     describe 'get' do
 
-      it 'should be successful' do
+      it 'be successful' do
         get :index
         response.should be_successful
       end
@@ -24,12 +24,12 @@ describe Ryte::Admin::PostsController do
 
     describe 'get' do
 
-      it 'should be succesful' do
+      it 'be succesful' do
         get :new
         response.should be_successful
       end
 
-      it "should assign a @post variable" do
+      it "assign a @post variable" do
         get :new
         assigns[:post].should be_an_instance_of(Ryte::Post)
       end
@@ -42,7 +42,7 @@ describe Ryte::Admin::PostsController do
 
       let(:valid) { { post: build(:ryte_post).attributes } }
 
-      it "should create a post" do
+      it "create a post" do
         expect {
           post :create, valid
         }.to change(Ryte::Post, :count).by(1)

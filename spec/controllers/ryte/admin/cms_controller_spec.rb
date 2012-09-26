@@ -12,7 +12,7 @@ describe Ryte::Admin::CmsController do
         sign_in(admin)
       end
 
-      it "should be successful" do
+      it "be successful" do
         get :dashboard
         response.should be_successful
       end
@@ -24,7 +24,7 @@ describe Ryte::Admin::CmsController do
         sign_in(admin)
       end
 
-      it 'should show a sign out link' do
+      it 'show a sign out link' do
         get :dashboard
         response.should contain("Sign Out")
       end
@@ -36,7 +36,7 @@ describe Ryte::Admin::CmsController do
         sign_out(admin)
       end
 
-      it 'should show a sign out link' do
+      it 'show a sign out link' do
         get :dashboard
         response.should redirect_to(new_admin_session_path)
       end

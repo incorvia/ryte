@@ -13,7 +13,7 @@ describe Ryte::Setting::List do
         @list = list_with_settings
       end
 
-      it "should embed_many settings" do
+      it "embed_many settings" do
         @list.settings.count > 0
       end
     end
@@ -30,7 +30,7 @@ describe Ryte::Setting::List do
 
       context 'no list' do
 
-        it "should only allow one list" do
+        it "only allow one list" do
          @valid.should have(0).errors
         end
       end
@@ -41,11 +41,11 @@ describe Ryte::Setting::List do
           @invalid = Ryte::Setting::List.create
         end
 
-        it "should only allow one list" do
+        it "only allow one list" do
           @invalid.should have(1).errors_on(:one_allowed)
         end
 
-        it "should contain a relevant error message" do
+        it "contain a relevant error message" do
           @invalid.errors.full_messages.first.should eql("One allowed list document")
         end
       end
@@ -62,7 +62,7 @@ describe Ryte::Setting::List do
 
       context 'refresh' do
 
-        it "should refresh from the database" do
+        it "refresh from the database" do
           Ryte::Setting::List.should_receive(:first)
           Ryte::Setting::List.reload
         end
@@ -73,7 +73,7 @@ describe Ryte::Setting::List do
             Ryte::Setting::List.delete_all
           end
 
-          it "should create a new list" do
+          it "create a new list" do
             Ryte::Setting::List.should_receive(:create)
             Ryte::Setting::List.reload
           end
@@ -82,7 +82,7 @@ describe Ryte::Setting::List do
 
       context 'memoized' do
 
-        it "should return a list from an instance variable" do
+        it "return a list from an instance variable" do
           Ryte::Setting::List.should_not_receive(:first)
           Ryte::Setting::List.list
         end
@@ -97,7 +97,7 @@ describe Ryte::Setting::List do
 
       context 'refresh' do
 
-        it "should refresh from the database" do
+        it "refresh from the database" do
           Ryte::Setting::List.should_receive(:first)
           Ryte::Setting::List.reload
         end
@@ -105,7 +105,7 @@ describe Ryte::Setting::List do
 
       context 'memoized' do
 
-        it "should return a list from the database" do
+        it "return a list from the database" do
           Ryte::Setting::List.should_receive(:first)
           Ryte::Setting::List.list
         end
@@ -117,7 +117,7 @@ describe Ryte::Setting::List do
           Ryte::Setting::List.delete_all
         end
 
-        it "should create a new list" do
+        it "create a new list" do
           Ryte::Setting::List.should_receive(:create)
           Ryte::Setting::List.list
         end
@@ -127,14 +127,14 @@ describe Ryte::Setting::List do
 
   describe '.all' do
 
-    it "should return all the settings" do
+    it "return all the settings" do
       Ryte::Setting::List.all.should =~ Settings.all
     end
   end
 
   describe '.reload' do
 
-    it "should call 'list' with refresh set to true" do
+    it "call 'list' with refresh set to true" do
       Settings.should_receive(:list).with(true)
       Ryte::Setting::List.reload
     end
@@ -146,7 +146,7 @@ describe Ryte::Setting::List do
       @setting = Settings.all.first
     end
 
-    it "should return a setting by name" do
+    it "return a setting by name" do
       Ryte::Setting::List.by_name(@setting.name).should eql(@setting)
     end
   end
@@ -160,11 +160,11 @@ describe Ryte::Setting::List do
       @invalid.update_attributes(bundle: 'invalid')
     end
 
-    it "should return settings in the bundle" do
+    it "return settings in the bundle" do
       Ryte::Setting::List.by_bundle(@setting.bundle).should include(@setting)
     end
 
-    it "should not return a setting not in the bundle" do
+    it "not return a setting not in the bundle" do
       Ryte::Setting::List.by_bundle(@setting.bundle).should_not include(@invalid)
     end
   end
@@ -178,11 +178,11 @@ describe Ryte::Setting::List do
       @invalid.update_attributes(type: 'invalid')
     end
 
-    it "should return a setting by name" do
+    it "return a setting by name" do
       Ryte::Setting::List.by_type(@setting.type).should include(@setting)
     end
 
-    it "should not return a setting not in the type" do
+    it "not return a setting not in the type" do
       Ryte::Setting::List.by_type(@setting.type).should_not include(@invalid)
     end
   end
@@ -193,7 +193,7 @@ describe Ryte::Setting::List do
       Settings.all.delete_all
     end
 
-    it "should save a list of settings" do
+    it "save a list of settings" do
       expect {
         Settings.load([build(:ryte_setting)])
       }.to change(Settings.all, :count).by(1)
@@ -206,12 +206,12 @@ describe Ryte::Setting::List do
       @list = Settings.list
     end
 
-    it "should call save on the settings list" do
+    it "call save on the settings list" do
       @list.should_receive(:save)
       Settings.save_and_reload
     end
 
-    it "should receive 'list' with refresh true" do
+    it "receive 'list' with refresh true" do
       Settings.stub_chain(:list, :save).and_return(true)
       Settings.should_receive(:list).with(true)
       Settings.save_and_reload
@@ -220,7 +220,7 @@ describe Ryte::Setting::List do
 
   describe '.users_path' do
 
-    it 'should be correct' do
+    it 'be correct' do
       path = File.join(Rails.root, 'spec', 'support', 'user')
       Settings.users_path.should eql(path)
     end
@@ -228,7 +228,7 @@ describe Ryte::Setting::List do
 
   describe ".current_theme" do
 
-    it "should call 'by_name' on settings" do
+    it "call 'by_name' on settings" do
       Settings.current_theme.should eql('default')
     end
   end
@@ -239,7 +239,7 @@ describe Ryte::Setting::List do
       Settings.current_theme.should eql('default')
     end
 
-    it "should set the name of the current_theme" do
+    it "set the name of the current_theme" do
       Settings.current_theme = 'test'
       Settings.current_theme.should eql('test')
     end

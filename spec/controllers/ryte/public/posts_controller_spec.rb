@@ -10,12 +10,12 @@ describe Ryte::Public::PostsController do
         2.times { create(:ryte_post) }
       end
 
-      it "should be successful" do
+      it "be successful" do
         get :index
         response.should be_successful
       end
 
-      it "should assign @posts" do
+      it "assign @posts" do
         get :index
         assigns[:posts].should =~ Ryte::Post.all.to_a
       end

@@ -3,8 +3,8 @@
   <%= form_for @post, as: :post, url: admin_posts_path(@post), html: { :class => "span7" } do |f| %>
     <%= f.text_field :title, class: "span7" %>
     <%= f.text_area :body, class: "wysiyg span7" %>
-    <%= f.submit "Publish", class: "btn btn-primary pull-right"%>
-  <% end %>
 </div>
-<%= render 'meta' %>
+
+<%= render partial: 'meta', locals: { f: f } %>
+<% end %>
 

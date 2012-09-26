@@ -4,17 +4,13 @@
   </table>
   <table>
     <thead>
-      <tr>
-        <h4>This is the test</h4>
-      </tr>
     </thead>
     <tbody>
       <tr>
         <td>
-          <input name="new_post" class="btn btn-primary" type="submit" value="Save Draft">
-        </td>
-        <td>
-          <input name="new_post" class="btn btn-primary" type="submit" value="Publish">
+          <%= f.label :title %>
+          <%= f.select(:status, Ryte::Post::ALLOWED_STATUSES) %>
+          <input name="new_post" class="btn btn-primary" type="submit" value="Save Post">
         </td>
       </tr>
     </tbody>

@@ -1,3 +1,4 @@
+require 'pry'
 class Ryte::Theme::Matchers
 
   class << self
@@ -15,7 +16,7 @@ class Ryte::Theme::Matchers
     partial     = "#{File.open(path).read}"
     attributes  = {}
 
-    if matches[3]
+    unless matches[3].blank?
       attr_set    = matches[3][1..-1].strip.split(',') if matches[3]
 
       attr_set.each do |hash|

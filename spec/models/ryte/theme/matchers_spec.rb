@@ -7,7 +7,7 @@ describe Ryte::Theme::Matchers do
     let(:template) { "{{ admin_path }}" }
     let(:response) { Braai::Template.new(template).render }
 
-    it 'should return the path to the admin area' do
+    it 'returns the path to the admin area' do
       response.should eql("/admins/sign_in")
     end
   end
@@ -19,7 +19,7 @@ describe Ryte::Theme::Matchers do
       let(:template) { "{{ partial header }}" }
       let(:response) { Braai::Template.new(template).render }
 
-      it "should render the injected partial" do
+      it "render the injected partial" do
         response.should match(/Header\ Partial/)
       end
     end
@@ -30,20 +30,20 @@ describe Ryte::Theme::Matchers do
       let(:template) { "{{ partial header | foo: post }}" }
       let(:response) { Braai::Template.new(template).render(name: "Bobby", post: post) }
 
-      it "should render the injected partial" do
+      it "renders the injected partial" do
         response.should match(/Header\ Partial/)
       end
 
-      it "should process braai partial tags" do
+      it "processes braai partial tags" do
         response.should match(/Bobby/)
       end
 
-      it "should pass variables as defined in tag" do
+      it "passes variables as defined in tag" do
         response.should match(/body1/)
       end
     end
 
-    context "multiple partial variables" do
+    context "multiply's partial variables" do
 
       let(:post) { create(:ryte_post, body: "body1") }
       let(:post2) { create(:ryte_post, body: "body2") }
@@ -52,19 +52,19 @@ describe Ryte::Theme::Matchers do
         Braai::Template.new(template).render(name: "Bobby", post: post, post2: post2)
       end
 
-      it "should render the injected partial" do
+      it "renders the injected partial" do
         response.should match(/Header\ Partial/)
       end
 
-      it "should process braai partial tags" do
+      it "processes braai partial tags" do
         response.should match(/Bobby/)
       end
 
-      it "should pass variables as defined in tag" do
+      it "passes variables as defined in tag" do
         response.should match(/body1/)
       end
 
-      it "should pass variables as defined in tag" do
+      it "passes variables as defined in tag" do
         response.should match(/body2/)
       end
     end

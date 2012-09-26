@@ -17,7 +17,7 @@ describe Ryte::Setting do
         @setting = @list.settings.first
       end
 
-      it "should be embedded in a Ryte::Setting::List obejct" do
+      it "be embedded in a Ryte::Setting::List obejct" do
         @setting.setting_list.should eql(@list)
       end
     end
@@ -41,7 +41,7 @@ describe Ryte::Setting do
               @setting.send("#{attr}=", nil)
             end
 
-            it "should be not be valid" do
+            it "be not be valid" do
               @setting.should_not be_valid
             end
           end
@@ -52,7 +52,7 @@ describe Ryte::Setting do
               @setting.send("#{attr}=", 'theme')
             end
 
-            it "should be be valid" do
+            it "be be valid" do
               @setting.should be_valid
             end
           end
@@ -72,7 +72,7 @@ describe Ryte::Setting do
             @invalid.name= @list.settings.last.name
           end
 
-          it "should require uniqueness by name" do
+          it "require uniqueness by name" do
             @invalid.should_not be_valid
           end
         end
@@ -84,7 +84,7 @@ describe Ryte::Setting do
 
         context 'valid format' do
 
-          it "should allow valid formats" do
+          it "allow valid formats" do
             @setting.name = "test_name"
             @setting.should be_valid
             @setting.name = "_test_name_2"
@@ -94,7 +94,7 @@ describe Ryte::Setting do
 
         context 'invalid format' do
 
-          it "should allow valid formats" do
+          it "allow valid formats" do
             @setting.name = "Test_name"
             @setting.should_not be_valid
             @setting.name = "_test_Name_@"
@@ -114,7 +114,7 @@ describe Ryte::Setting do
 
         context 'valid format' do
 
-          it "should allow valid formats" do
+          it "allow valid formats" do
             @setting.bundle = "test_name"
             @setting.should be_valid
             @setting.bundle = "_test_name_2"
@@ -124,7 +124,7 @@ describe Ryte::Setting do
 
         context 'invalid format' do
 
-          it "should allow valid formats" do
+          it "allow valid formats" do
             @setting.bundle = "Test_bundle"
             @setting.should_not be_valid
             @setting.bundle = "_test_Name_@"
@@ -146,7 +146,7 @@ describe Ryte::Setting do
           Ryte::Setting::ALLOWED_TYPES.should include(@setting.type)
         end
 
-        it "should be valid" do
+        it "be valid" do
           @setting.should be_valid
         end
       end
@@ -157,7 +157,7 @@ describe Ryte::Setting do
           @setting.type = 'invalid'
         end
 
-        it "should not be valid" do
+        it "not be valid" do
           @setting.should_not be_valid
         end
       end
@@ -179,7 +179,7 @@ describe Ryte::Setting do
             @setting.type = type
           end
 
-          it "should return " do
+          it "return " do
             @setting.send("#{type}?").should be_true
           end
         end
@@ -190,7 +190,7 @@ describe Ryte::Setting do
             @setting.type = "invalid"
           end
 
-          it "should return false" do
+          it "return false" do
             @setting.send("#{type}?").should be_false
           end
         end

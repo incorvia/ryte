@@ -1,10 +1,10 @@
 <div class="span7">
   <h3> New Post </h3>
-  <%= form_for @post, as: :post, url: admin_posts_path(@post),
+  <%= form_for @post, as: :post, url: admin_posts_path,
     html: { class: "span7", name: "new_post" } do |f| %>
     <%= f.text_field :title, class: "span7" %>
     <%= f.text_area :body, class: "wysiyg span7" %>
-    <%= f.hidden_field :status %>
-  <% end %>
 </div>
-<%= render 'meta' %>
+
+<%= render partial: 'meta', locals: { f: f } %>
+<% end %>

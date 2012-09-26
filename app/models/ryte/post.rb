@@ -1,6 +1,7 @@
 class Ryte::Post
   include Mongoid::Document
   include Mongoid::Versioning
+  include Mongoid::Slug
   include ActiveModel::ForbiddenAttributesProtection
 
   max_versions 5
@@ -10,6 +11,8 @@ class Ryte::Post
   field :title, type: String, default: ""
   field :body,  type: String, default: ""
   field :status, type: String, default: ""
+
+  slug :title
 
   validates :status, inclusion: ALLOWED_STATUSES
 

@@ -19,12 +19,12 @@ describe Ryte::Theme::Registration do
         @theme.stub!(:valid?).and_return(true)
       end
 
-      it "should call 'build!'" do
+      it "call 'build!'" do
         @theme.should_receive(:build!)
         Ryte::Theme.register!('default')
       end
 
-      it "should call 'add_to_registered_themes'" do
+      it "call 'add_to_registered_themes'" do
         @theme.should_receive(:add_to_registered_themes)
         Ryte::Theme.register!('default')
       end
@@ -36,7 +36,7 @@ describe Ryte::Theme::Registration do
         @theme.stub!(:valid?).and_return(false)
       end
 
-      it "should not call 'build!'" do
+      it "not call 'build!'" do
         @theme.should_not_receive(:build!)
         Ryte::Theme.register!('default')
       end
@@ -45,7 +45,7 @@ describe Ryte::Theme::Registration do
 
   describe '.activate!' do
 
-    it 'should run the precompiler then set the theme' do
+    it 'run the precompiler then set the theme' do
       Ryte::Theme::Precompiler.should_receive(:run!).ordered
       Settings.should_receive(:current_theme=).with('default').ordered
       Ryte::Theme.activate!('default')
@@ -60,7 +60,7 @@ describe Ryte::Theme::Registration do
       setting.save
     end
 
-    it "should add the theme to the registered_themes list" do
+    it "add the theme to the registered_themes list" do
       theme.add_to_registered_themes
       Settings.by_name('registered_themes').value.should eql(['default'])
     end

@@ -8,14 +8,14 @@ describe Ryte::Theme::Precompiler do
 
   describe '_env' do
 
-    it 'should return the rails application assets array' do
+    it 'returns the rails application assets array' do
       @_pfix._env.should eql(Rails.application.assets)
     end
   end
 
   describe '_paths' do
 
-    it 'should return the rails application config assets paths array' do
+    it 'returns the rails application config assets paths array' do
       @_pfix._paths.should eql(Rails.application.config.assets.paths)
     end
   end
@@ -28,7 +28,7 @@ describe Ryte::Theme::Precompiler do
         Ryte::Application.stub_chain(:config, :assets, :compress).and_return(true)
       end
 
-      it 'should receive load_paths and precompile ordered' do
+      it 'receives load_paths and precompile ordered' do
         @_pfix.should_receive(:load_paths).ordered
         @_pfix.should_receive(:precompile).ordered
         @_pfix.run!
@@ -41,7 +41,7 @@ describe Ryte::Theme::Precompiler do
         Ryte::Application.stub_chain(:config, :assets, :compress).and_return(false)
       end
 
-      it 'should receive load_paths and precompile ordered' do
+      it 'receives load_paths and precompile ordered' do
         @_pfix.should_receive(:load_paths).ordered
         @_pfix.should_not_receive(:precompile).ordered
         @_pfix.run!
@@ -52,7 +52,7 @@ describe Ryte::Theme::Precompiler do
 
   describe 'load_paths' do
 
-    it 'should receive clear_paths and append_paths ordered' do
+    it 'receives clear_paths and append_paths ordered' do
       @_pfix._env.should_receive(:clear_paths).ordered
       @_pfix.should_receive(:append_paths).ordered
       @_pfix.run!
@@ -63,7 +63,7 @@ describe Ryte::Theme::Precompiler do
 
     let(:paths) { @_pfix._paths + Settings.assets_dirs }
 
-    it 'should append default and new asset paths' do
+    it 'append default and new asset paths' do
       paths.each do |path|
         @_pfix._env.should_receive(:append_path).with(path)
       end

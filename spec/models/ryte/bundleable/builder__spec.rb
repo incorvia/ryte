@@ -10,12 +10,12 @@ describe Ryte::Bundleable::Builder_ do
 
   describe "build!" do
 
-    it "should call 'build!'" do
+    it "call 'build!'" do
       bundle.should_receive(:build)
       bundle.build!
     end
 
-    it "should call 'commit'" do
+    it "call 'commit'" do
       bundle.should_receive(:commit)
       bundle.build!
     end
@@ -23,7 +23,7 @@ describe Ryte::Bundleable::Builder_ do
 
   describe "build" do
 
-    it "should call 'build_settings' on each hash bundle" do
+    it "call 'build_settings' on each hash bundle" do
       bundle.settings_hash.each do |key, values|
         bundle.should_receive(:build_settings).with(key, values)
       end
@@ -46,7 +46,7 @@ describe Ryte::Bundleable::Builder_ do
         @first = bundle.settings.first
       end
 
-      it "should build settings appropriately" do
+      it "build settings appropriately" do
         @first.name.should eql("widget_width")
         @first.type.should eql(hash[:bundle_type])
         @first.value.should eql("50")
@@ -61,7 +61,7 @@ describe Ryte::Bundleable::Builder_ do
         @bundle.send(:build_settings, 'default', hash)
       end
 
-      it "should build no settings" do
+      it "build no settings" do
         @bundle.settings.count.should eql(0)
       end
     end

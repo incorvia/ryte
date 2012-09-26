@@ -20,7 +20,7 @@ describe Ryte::Bundleable::Core_ do
 
     accessors.each do |attr|
       describe "#{attr}" do
-        it "should have a reader and writer" do
+        it "have a reader and writer" do
           bundle.methods.should include("#{attr}=".to_sym)
           bundle.methods.should include("#{attr}".to_sym)
         end
@@ -32,35 +32,35 @@ describe Ryte::Bundleable::Core_ do
 
     describe "name" do
 
-      it "should set the name" do
+      it "set the name" do
         bundle.name.should eql('default')
       end
     end
 
     describe "files" do
 
-      it "should set the files variable via the file_matcher" do
+      it "set the files variable via the file_matcher" do
         bundle.files.should eql(Dir.glob(File.join(bundle.bundle_dir, "**/*.*")))
       end
     end
 
     describe "settings_file" do
 
-      it "should be a settings file" do
+      it "be a settings file" do
         bundle.settings_file.to_path.should match(/settings.yml/)
       end
     end
 
     describe "settings" do
 
-      it "should be an empty array" do
+      it "be an empty array" do
         bundle.settings.should eql([])
       end
     end
 
     describe 'settings_hash' do
 
-      it "should call 'load_settings'" do
+      it "call 'load_settings'" do
         bundle.should_receive(:load_settings)
         bundle.send(:initialize, 'default')
       end
@@ -68,14 +68,14 @@ describe Ryte::Bundleable::Core_ do
 
     describe 'required_files' do
 
-      it "should be an empty array" do
+      it "be an empty array" do
         bundle.required_files.should eql([])
       end
     end
 
     describe 'required_keys' do
 
-      it "should contain required key names" do
+      it "contain required key names" do
         bundle.required_keys.should eql(['bundle_type', 'settings'])
       end
     end
@@ -90,7 +90,7 @@ describe Ryte::Bundleable::Core_ do
 
     let(:built_bundle) { bundle.build }
 
-    it "should persist settings to the databse" do
+    it "persist settings to the databse" do
       expect {
         built_bundle.commit
       }.to change(Settings.all, :count).by(1)
@@ -99,7 +99,7 @@ describe Ryte::Bundleable::Core_ do
 
   describe 'bundle_files' do
 
-    it 'should return a list of files in the directory' do
+    it 'returns a list of files in the directory' do
       sample = File.join(bundle.bundle_dir, 'settings.yml')
       bundle.bundle_files.should include(sample)
     end
@@ -107,7 +107,7 @@ describe Ryte::Bundleable::Core_ do
 
   describe 'bundle_dir' do
 
-    it 'should be the correct directory' do
+    it 'be the correct directory' do
       d = File.join(Rails.root, 'spec', 'support',
                     'user', 'mocks', 'default', '/')
       bundle.bundle_dir.should eql(d)
@@ -116,7 +116,7 @@ describe Ryte::Bundleable::Core_ do
 
   describe 'bundle_settings_files' do
 
-    it 'should be the correct file' do
+    it 'be the correct file' do
       f = bundle.bundle_settings_file
       f.should be_an_instance_of(File)
       f.path.should eql(File.join(bundle.bundle_dir, 'settings.yml'))
@@ -131,7 +131,7 @@ describe Ryte::Bundleable::Core_ do
         YAML.stub(:load).and_return({setting: true})
       end
 
-      it "should return settings" do
+      it "return settings" do
         bundle.load_settings.keys.first.should eql("setting")
       end
     end
@@ -142,7 +142,7 @@ describe Ryte::Bundleable::Core_ do
         YAML.stub(:load).and_return(false)
       end
 
-      it "should return settings" do
+      it "return settings" do
         bundle.load_settings.should eql({})
       end
     end
@@ -150,7 +150,7 @@ describe Ryte::Bundleable::Core_ do
 
   describe "to_type" do
 
-    it "should return a downcased bundle type" do
+    it "return a downcased bundle type" do
       bundle.to_type.should eql('mock')
     end
   end

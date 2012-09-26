@@ -19,7 +19,7 @@ describe Ryte::Bundleable::Validations_ do
 
       context "valid" do
 
-        it "should be valid" do
+        it "be valid" do
           @valid.each do |valid|
             bundle.name = valid
             bundle.send(:validate_name)
@@ -30,7 +30,7 @@ describe Ryte::Bundleable::Validations_ do
 
       context "invalid" do
 
-        it "should be invalid" do
+        it "be invalid" do
           @invalid.each do |invalid|
             bundle.name = invalid
             bundle.send(:validate_name)
@@ -45,7 +45,7 @@ describe Ryte::Bundleable::Validations_ do
 
       context 'missing files' do
 
-        it "should require files" do
+        it "require files" do
           bundle.required_files.each do |file|
             bundle.stub!(:missing_files).and_return([file])
             bundle.should_not be_valid
@@ -55,7 +55,7 @@ describe Ryte::Bundleable::Validations_ do
 
       context 'files present' do
 
-        it 'should not return any errors' do
+        it 'not return any errors' do
           Mock.stub!(:missing_files).and_return([])
           bundle.should be_valid
         end
@@ -70,7 +70,7 @@ describe Ryte::Bundleable::Validations_ do
           @keys = bundle.required_keys
         end
 
-        it "should require a specific keys" do
+        it "require a specific keys" do
           @keys.each do |key|
             bundle.settings_hash[:default].delete(key)
             bundle.should_not be_valid
@@ -86,7 +86,7 @@ describe Ryte::Bundleable::Validations_ do
         @bundle.build
       end
 
-      it "should call 'valid?' on each setting" do
+      it "call 'valid?' on each setting" do
         @bundle.settings.each do |setting|
           setting.should_receive(:valid?)
         end
@@ -95,7 +95,7 @@ describe Ryte::Bundleable::Validations_ do
 
       context "valid settings" do
 
-        it "should have no errors" do
+        it "have no errors" do
           @bundle.valid?
           @bundle.errors.messages[:settings].should eql(nil)
         end
@@ -109,11 +109,11 @@ describe Ryte::Bundleable::Validations_ do
           @errors = [{:name=>["can't be blank", "is invalid"]}]
         end
 
-        it "should be invalid" do
+        it "be invalid" do
           @bundle.should_not be_valid
         end
 
-        it "should have the correct error" do
+        it "have the correct error" do
           @bundle.valid?
           @bundle.errors.messages[:settings].should eql(@errors)
         end
@@ -128,7 +128,7 @@ describe Ryte::Bundleable::Validations_ do
       @bundle.required_files = ['foo.yml']
     end
 
-    it 'should return missing files' do
+    it 'returns missing files' do
       @bundle.send(:missing_files).first.should match(/foo\.yml/)
     end
   end
