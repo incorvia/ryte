@@ -6,6 +6,13 @@ GIT
       mongoid (~> 3.0)
       stringex (~> 1.4)
 
+GIT
+  remote: git://github.com/incorvia/braai.git
+  revision: b42f23cd63bcbd6106bc9a3f01c7d9027fec4a99
+  specs:
+    braai (1.1.1)
+      activesupport
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -43,8 +50,6 @@ GEM
     bcrypt-ruby (3.0.1)
     bootstrap-wysihtml5-rails (0.3.1.1)
       railties (>= 3.0)
-    braai (1.1.1)
-      activesupport
     builder (3.0.3)
     coderay (1.0.7)
     coffee-rails (3.2.2)
@@ -188,7 +193,7 @@ PLATFORMS
 DEPENDENCIES
   anjlab-bootstrap-rails (>= 2.1)
   bootstrap-wysihtml5-rails
-  braai
+  braai!
   coffee-rails
   configatron
   devise
