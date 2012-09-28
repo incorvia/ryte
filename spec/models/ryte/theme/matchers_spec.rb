@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe Ryte::Theme::Matchers do
 
+  let(:ryte_post) { create(:ryte_post) }
+
   describe 'Admin Path' do
 
     let(:template) { "{{ admin_path }}" }

@@ -6,6 +6,10 @@ Ryte::Application.routes.draw do
       resources :posts
       match '/dashboard', to: 'cms#dashboard', as: "root"
     end
+
+    scope module: :public do
+      resources :posts
+    end
   end
 
   root to: 'ryte/public/posts#index'

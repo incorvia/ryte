@@ -3,6 +3,7 @@ class Ryte::Post
   include Mongoid::Versioning
   include Mongoid::Slug
   include ActiveModel::ForbiddenAttributesProtection
+  include Rails.application.routes.url_helpers
 
   max_versions 5
 
@@ -20,5 +21,9 @@ class Ryte::Post
     define_method "#{status}?" do
       self.status == status
     end
+  end
+
+  def url
+    post_path(self)
   end
 end

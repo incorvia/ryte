@@ -4,9 +4,10 @@ class Ryte::Theme::Matchers
     include Rails.application.routes.url_helpers
   end
 
-  # Admin Path
-  Braai::Template.map(/({{\s*admin_path\s*}})/i) do |template, key, matches|
-    "#{new_admin_session_path}"
+  # Post Path
+  Braai::Template.map(/({{\s*post_path\(([\w\d-]*)\)\s*}})/i) do |template, key, matches|
+    object = 
+    "#{post_path(matches[1])}"
   end
 
   # Partials

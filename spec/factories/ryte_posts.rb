@@ -2,6 +2,7 @@
 
 FactoryGirl.define do
   factory :ryte_post, :class => 'Ryte::Post' do
+    title "Hello World"
     body "This is the body of a Ryte Post"
     status "draft"
   end
