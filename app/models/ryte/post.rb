@@ -18,6 +18,8 @@ class Ryte::Post
 
   validates :status, inclusion: ALLOWED_STATUSES
 
+  default_scope order_by([:created_at, :desc])
+
   ALLOWED_STATUSES.each do |status|
     define_method "#{status}?" do
       self.status == status
