@@ -3,6 +3,7 @@ require 'spec_helper'
 describe Ryte::Admin::PostsController do
 
   let(:admin) { create(:ryte_admin) }
+  let(:valid) { { post: build(:ryte_post).attributes.symbolize_keys } }
 
   before :each do
     @admin = admin
@@ -40,12 +41,37 @@ describe Ryte::Admin::PostsController do
 
     context 'valid parameters' do
 
-      let(:valid) { { post: build(:ryte_post).attributes } }
-
-      it "create a post" do
+      it "creates a post" do
         expect {
           post :create, valid
         }.to change(Ryte::Post, :count).by(1)
+      end
+
+      it "redirects" do
+        post :create, valid
+        response.should redirect_to(edit_admin_post_path(Ryte::Post.first))
+      end
+    end
+  end
+
+  describe "redirect_by_status" do
+
+    context 'draft' do
+
+      it "redirects to the edit page" do
+        valid[:post][:status] = "draft"
+        post :create, valid
+        response.should redirect_to(edit_admin_post_path(Ryte::Post.first))
+      end
+
+    end
+
+    context "published" do
+
+      it "redirects to the live url" do
+        valid[:post][:status] = "published"
+        post :create, valid
+        response.should redirect_to(post_path(Ryte::Post.first))
       end
     end
   end
