@@ -10,7 +10,7 @@ gem 'devise'
 gem 'anjlab-bootstrap-rails', '>= 2.1', :require => 'bootstrap-rails'
 gem 'bootstrap-wysihtml5-rails'
 gem 'strong_parameters'
-gem 'braai', github: "incorvia/braai"
+gem 'braai', github: 'markbates/braai'
 gem 'mongoid_slug', github: 'digitalplaywright/mongoid-slug'
 
 group :assets do
@@ -28,6 +28,7 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'mongoid-rspec'
   gem 'guard-rspec'
+  gem 'timecop'
   gem 'pry'
   gem 'pry-nav'
 end

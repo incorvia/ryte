@@ -1,5 +1,6 @@
 class Ryte::Post
   include Mongoid::Document
+  include Mongoid::Timestamps
   include Mongoid::Versioning
   include Mongoid::Slug
   include ActiveModel::ForbiddenAttributesProtection

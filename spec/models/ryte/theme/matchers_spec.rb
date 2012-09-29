@@ -14,6 +14,22 @@ describe Ryte::Theme::Matchers do
     end
   end
 
+  describe 'Date Helper' do
+
+    before :each do
+      @time = Time.now
+    end
+
+    let(:template) { "{{ date({{ post.updated_at }}, %c) }}" }
+    let(:response) { Braai::Template.new(template).render(post: ryte_post) }
+
+    it 'returns the path to the admin area' do
+      Timecop.freeze(@time) do
+        response.should eql(@time.utc.strftime("%c"))
+      end
+    end
+  end
+
   describe "Partials" do
 
     context 'no variables' do

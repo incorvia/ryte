@@ -4,10 +4,15 @@ class Ryte::Theme::Matchers
     include Rails.application.routes.url_helpers
   end
 
-  # Post Path
-  Braai::Template.map(/({{\s*post_path\(([\w\d-]*)\)\s*}})/i) do |template, key, matches|
-    object = 
-    "#{post_path(matches[1])}"
+  # Admin Path
+  Braai::Template.map(/({{\s*admin_path\s*}})/i) do |template, key, matches|
+    "#{new_admin_session_path}"
+  end
+
+  # Date Helper
+  Braai::Template.map(/({{\s*date\((.*),(.*)\)\s*}})/) do |template, key, matches|
+    time = Time.parse(matches[1])
+    time.strftime(matches[2])
   end
 
   # Partials
@@ -30,5 +35,11 @@ class Ryte::Theme::Matchers
     end
 
     Braai::Template.new(partial).render(attributes)
+  end
+
+  # Variable Eval
+  Braai::Template.map(/({{\s*([\w]+)\.([\w]+)\s*}})/i) do |template, key, matches|
+    attr = template.attributes[matches[1]]
+    attr ? attr.send(matches[2]) : nil
   end
 end

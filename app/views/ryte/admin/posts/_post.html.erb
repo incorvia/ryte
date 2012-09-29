@@ -1,5 +1,6 @@
 <tr>
   <td><%= link_to post.title, edit_admin_post_path(post) %><td>
   <td><%= post.status %><td>
+  <td><%= friendly_date(post.updated_at) %><td>
 </tr>
 

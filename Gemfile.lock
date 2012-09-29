@@ -7,8 +7,8 @@ GIT
       stringex (~> 1.4)
 
 GIT
-  remote: git://github.com/incorvia/braai.git
-  revision: b42f23cd63bcbd6106bc9a3f01c7d9027fec4a99
+  remote: git://github.com/markbates/braai.git
+  revision: 37d778984735e8487d4d47748e264b819214ecc3
   specs:
     braai (1.1.1)
       activesupport
@@ -78,8 +78,9 @@ GEM
     guard (1.4.0)
       listen (>= 0.4.2)
       thor (>= 0.14.6)
-    guard-rspec (1.2.1)
+    guard-rspec (2.0.0)
       guard (>= 1.1)
+      rspec (~> 2.11)
     hike (1.2.1)
     i18n (0.6.1)
     journey (1.0.4)
@@ -120,7 +121,7 @@ GEM
       rack (>= 0.4)
     rack-ssl (1.3.2)
       rack
-    rack-test (0.6.1)
+    rack-test (0.6.2)
       rack (>= 1.0)
     rails (3.2.8)
       actionmailer (= 3.2.8)
@@ -172,6 +173,7 @@ GEM
     terminal-notifier-guard (1.5.3)
     thor (0.16.0)
     tilt (1.3.3)
+    timecop (0.5.2)
     treetop (1.4.10)
       polyglot
       polyglot (>= 0.3.1)
@@ -212,5 +214,6 @@ DEPENDENCIES
   sass-rails
   strong_parameters
   terminal-notifier-guard
+  timecop
   uglifier
   webrat
