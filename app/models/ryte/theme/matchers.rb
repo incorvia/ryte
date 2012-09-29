@@ -10,9 +10,10 @@ class Ryte::Theme::Matchers
   end
 
   # Date Helper
-  Braai::Template.map(/({{\s*date\((.*),(.*)\)\s*}})/) do |template, key, matches|
+  Braai::Template.map(/({{\s*date\((.*),\s*\"(.*)\"\)\s*}})/) do |template, key, matches|
     time = Time.parse(matches[1])
-    time.strftime(matches[2])
+    time = time.strftime(matches[2])
+    time.gsub("\"", "")
   end
 
   # Partials

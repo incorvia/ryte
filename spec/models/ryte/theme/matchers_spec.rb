@@ -20,12 +20,12 @@ describe Ryte::Theme::Matchers do
       @time = Time.now
     end
 
-    let(:template) { "{{ date({{ post.updated_at }}, %c) }}" }
+    let(:template) { '{{ date({{ post.updated_at }}, "%d, %m") }}' }
     let(:response) { Braai::Template.new(template).render(post: ryte_post) }
 
-    it 'returns the path to the admin area' do
+    it 'returns a correctly formatted string' do
       Timecop.freeze(@time) do
-        response.should eql(@time.utc.strftime("%c"))
+        response.should eql(@time.utc.strftime("%d, %m"))
       end
     end
   end
