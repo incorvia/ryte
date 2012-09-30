@@ -1,1 +1,5 @@
-<em>{{ date({{ post.updated_at }}, "%a %b %e, %l:%M%P") }}<em>
+<div class="meta span2">
+  <ul>
+    <li><i class="icon-calendar"></i>{{ date({{ post.created_at }}, "%b %d, %Y") }}</li>
+  </ul>
+</div>

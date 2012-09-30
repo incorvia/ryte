@@ -1,5 +1,10 @@
-<div id='page'>
-  {{ partial header }}
-
-  {{ partial post | post: post }}
+<div id="page" class="container row">
+  <div class="page span10">
+    {{ partial header }}
+    <section class="main">
+      <ul class="post-list">
+        {{ partial post | post: post }}
+      </ul>
+    </section>
+  </div>
 </div>

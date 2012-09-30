@@ -6,6 +6,7 @@ describe Ryte::Public::PostsController do
 
     before :each do
       2.times { create(:ryte_post) }
+      2.times { create(:ryte_post, status: "draft") }
     end
 
     it "is successful" do
@@ -15,7 +16,7 @@ describe Ryte::Public::PostsController do
 
     it "assigns @posts" do
       get :index
-      assigns[:posts].should =~ Ryte::Post.all.to_a
+      assigns[:posts].should =~ Ryte::Post.where(status: "published").to_a
     end
 
   end

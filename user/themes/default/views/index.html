@@ -1,7 +1,12 @@
-<div id='page'>
-  {{ partial header }}
-
-  {{ for post in posts }}
-    {{ partial excerpt | post: post }}
-  {{ /for }}
+<div id="page" class="container row">
+  <div class="page span10">
+    {{ partial header }}
+    <section class="main">
+      <ul class="post-list">
+        {{ for post in posts }}
+          {{ partial post | post: post }}
+        {{ /for }}
+      </ul>
+    </section>
+  </div>
 </div>

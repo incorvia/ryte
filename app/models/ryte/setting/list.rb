@@ -50,7 +50,7 @@ class Ryte::Setting::List
     end
 
     def assets_dirs
-      %w(images stylesheets javascripts).map { |x| File.join(current_theme_path, x) }
+      %w(images stylesheets javascripts fonts).map { |x| File.join(current_theme_path, x) }
     end
 
     def current_theme

@@ -4,6 +4,7 @@
   <title>Ryte</title>
   <%= stylesheet_link_tag    "public", :media => "all" %>
   <%= javascript_include_tag "public" %>
+  <%= render '/head' rescue nil %>
   <%= csrf_meta_tags %>
 </head>
 <body>
