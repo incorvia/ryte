@@ -46,12 +46,12 @@ describe Ryte::Post do
     describe "default scope: order_by" do
 
       before :each do
-        2.times { |x| create(:ryte_post, created_at: Time.now + 1.hour) }
+        2.times { |x| create(:ryte_post, updated_at: Time.now + 1.hour) }
       end
 
       it "sorts by created_at desc" do
         posts = Ryte::Post.all.to_a
-        posts.first.created_at > posts.last.created_at
+        posts.first.updated_at > posts.last.updated_at
       end
     end
   end
