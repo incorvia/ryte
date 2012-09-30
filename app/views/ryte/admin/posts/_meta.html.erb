@@ -8,8 +8,8 @@
     <tbody>
       <tr>
         <td>
-          <%= f.label :title %>
-          <%= f.select(:status, Ryte::Post::ALLOWED_STATUSES) %>
+          <%= f.label :status %>
+          <%= f.select(:status, Ryte::Post::ALLOWED_STATUSES.map{|x| x.capitalize}) %>
           <input name="new_post" class="btn btn-primary" type="submit" value="Save Post">
         </td>
       </tr>
