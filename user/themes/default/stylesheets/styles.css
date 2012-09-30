@@ -42,7 +42,7 @@ ul {
 }
 
 .header {
-  margin-bottom: 60px;
+  margin-bottom: 40px;
 }
 
 .nav-pills > li > a {
@@ -52,8 +52,6 @@ ul {
 }
 
 .nav-pills > .active > a, .nav-pills > .active > a:hover {
-  color: #000;
-  background-color: #f6f6f6;
 }
 
 .post-list {
