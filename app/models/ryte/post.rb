@@ -29,4 +29,5 @@ class Ryte::Post
   def url
     post_path(self)
   end
+
 end

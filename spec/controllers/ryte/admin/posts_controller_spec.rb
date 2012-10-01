@@ -49,7 +49,7 @@ describe Ryte::Admin::PostsController do
 
       it "redirects" do
         post :create, valid
-        response.should redirect_to(edit_admin_post_path(Ryte::Post.first))
+        response.should redirect_to(post_path(Ryte::Post.first))
       end
     end
   end

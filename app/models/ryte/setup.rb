@@ -49,7 +49,7 @@ module Ryte::Setup
     end
 
     def create_current_theme
-      values = { 
+      values = {
         name: "current_theme",
         value: "default",
         display: "Default",
@@ -61,7 +61,7 @@ module Ryte::Setup
     end
 
     def create_registered_themes
-      values = { 
+      values = {
         name: "registered_themes",
         value: [],
         display: "Registered Themes",
