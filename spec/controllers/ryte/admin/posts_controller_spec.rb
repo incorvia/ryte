@@ -3,6 +3,7 @@ require 'spec_helper'
 describe Ryte::Admin::PostsController do
 
   let(:admin) { create(:ryte_admin) }
+  let(:ryte_post) {  create(:ryte_post) }
   let(:valid) { { post: build(:ryte_post).attributes.symbolize_keys } }
 
   before :each do
@@ -54,12 +55,22 @@ describe Ryte::Admin::PostsController do
     end
   end
 
+  describe "update" do
+
+    it "update the post" do
+      post :update, id: ryte_post.slug, post: { status: "draft" }
+      ryte_post.reload
+      ryte_post.status.should eql("draft")
+    end
+  end
+
+
   describe "redirect_by_status" do
 
     context 'draft' do
 
       it "redirects to the edit page" do
-        valid[:post][:status] = "draft"
+        valid.merge( post: { status: "draft" } )
         post :create, valid
         response.should redirect_to(edit_admin_post_path(Ryte::Post.first))
       end

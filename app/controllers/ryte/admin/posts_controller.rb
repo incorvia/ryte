@@ -17,6 +17,14 @@ class Ryte::Admin::PostsController < Ryte::Admin::BaseController
     redirect_by_status(post)
   end
 
+  def update
+    post = Ryte::Post.find(params[:id])
+
+    if post.update_attributes(post_params)
+      redirect_to edit_admin_post_path(post)
+    end
+  end
+
   private
 
   def post_params
