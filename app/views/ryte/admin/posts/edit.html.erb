@@ -1,6 +1,6 @@
 <div class="span7">
   <h3> Edit Post </h3>
-  <%= form_for @post, as: :post, url: admin_posts_path(@post), html: { :class => "span7" } do |f| %>
+  <%= form_for @post, as: :post, url: admin_post_path(@post), html: { :class => "span7", method: :put }  do |f| %>
     <%= f.text_field :title, class: "span7" %>
     <%= f.text_area :body, class: "wysiyg span7" %>
 </div>
